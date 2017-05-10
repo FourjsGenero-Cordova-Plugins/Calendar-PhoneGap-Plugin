@@ -16,9 +16,15 @@ TARGET              = simulator
 TARGET              = phone
 MODE                = debug
 BUILD_FGL           = yes
-FGLLDPATH           = ../../lib
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
+
+# in case you build the demo when having the plugin checked out of github 
+# then we use the fglcvdCalendar.42m in the fgl dir of the plugin
+ifneq ($(wildcard ../../fgl),)
+export FGLLDPATH    = ../../fgl
+endif
+
 
 USER_EXTENSION_LIBS = $(GMIDIR)/lib/cordova/CDVCalendar.a
 
@@ -27,7 +33,7 @@ ifndef GMIDIR
 GMIDIR=$(FGLDIR)
 endif
 MAKEFILE_GMI=$(shell GMIDIR="$(GMIDIR)";echo $${GMIDIR// /\\ })/lib/Makefile-gmi
-include $(MAKEFILE_GMI)
+-include $(MAKEFILE_GMI)
 
 main.42m: calendars.42f events.42f newevent.42f
 

@@ -54,9 +54,25 @@ PUBLIC TYPE findOptionsT RECORD
   calendarName STRING
 END RECORD
 
-PUBLIC DEFINE eventOptions eventOptionsT
+PUBLIC TYPE attendeesT RECORD
+  name STRING,
+  URL STRING,
+  status STRING,
+  type STRING,
+  role STRING
+END RECORD
 
-PUBLIC TYPE eventType RECORD --return type for find function
+PUBLIC TYPE RecurrenceRuleT RECORD 
+  freq STRING, --for ex "weekly" or "monthly"
+  interval INT, --every <interval> week , every <interval> month etc
+  wkst STRING, --weekstart
+  byday STRING, --for ex SU,MO,TU,WE,TH,FR,SA
+  bymonthday STRING, --for ex 2,15
+  until CALENDAR_DATE, --recurring stops at this date if set
+  count INT --if set then it means recurring stops after <count> occurences
+END RECORD
+
+PUBLIC TYPE eventT RECORD --return type for find function
     title STRING,
     calendar STRING,
     id STRING,
@@ -69,22 +85,8 @@ PUBLIC TYPE eventType RECORD --return type for find function
     url STRING,
     notes STRING,
     allday BOOLEAN,
-    attendees DYNAMIC ARRAY OF RECORD
-        name STRING,
-        URL STRING,
-        status STRING,
-        type STRING,
-        role STRING
-    END RECORD,
-    rrule RECORD 
-        freq STRING, --for ex "weekly" or "monthly"
-        interval INT, --every <interval> week , every <interval> month etc
-        wkst STRING, --weekstart
-        byday STRING, --for ex SU,MO,TU,WE,TH,FR,SA
-        bymonthday STRING, --for ex 2,15
-        until CALENDAR_DATE, --recurring stops at this date if set
-        count INT --if set then it means recurring stops after <count> occurences
-     END RECORD
+    attendees DYNAMIC ARRAY OF attendeesT,
+    rrule RecurrenceRuleT
 END RECORD
 
 TYPE eventTypeInternal RECORD --return type for find function
@@ -171,14 +173,6 @@ PRIVATE TYPE deleteOptionsT RECORD
 END RECORD
 
 DEFINE m_error STRING --holds the error message from the last operation
-
-MAIN
-  LET eventOptions.title="hallo"
-  LET eventOptions.startDate=CURRENT
-  CALL outer2Int(eventOptions.*)
-  DISPLAY "calTitle:",optionsInt.title
-  DISPLAY "calDate:",optionsInt.startTime
-END MAIN
 
 #+ inits the plugin
 #+ must be called prior other calls
@@ -323,8 +317,8 @@ END FUNCTION
 #+ @param calendarName must not be NULL
 #+ @return all events and an error string in case the operation failed
 PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING) 
-           --RETURNS DYNAMIC ARRAY OF eventType ,STRING
-  DEFINE arr DYNAMIC ARRAY OF eventType
+           --RETURNS DYNAMIC ARRAY OF eventT ,STRING
+  DEFINE arr DYNAMIC ARRAY OF eventT
   DEFINE options calendarOptionsT
   DEFINE err STRING
   CALL getCalendarOptions() RETURNING options.*
@@ -369,7 +363,7 @@ END FUNCTION
 #+ @param changeOptions contains the values to be override the old values in the event 
 #+ @return the event Identifier if a change took place, NULL otherwise
 #+ in the error case the error can be retrieved with getLastError()
-FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT)
+FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
     title STRING ATTRIBUTE(json_null="null"),
@@ -459,7 +453,8 @@ END FUNCTION
 
 #+ modifies the given event in a native UI dialog
 #+ @param event the event to modify
-FUNCTION modifyEventInteractively(event eventType) RETURNS STRING
+#+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog
+FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
@@ -561,7 +556,7 @@ END FUNCTION
 #+ @param event structure returned by findEvent
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
 #+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
-FUNCTION deleteEvent(event eventType,spanFutureEvents BOOLEAN) RETURNS STRING
+FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
@@ -573,7 +568,7 @@ END FUNCTION
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
 #+ @param calendarName calendar where the deletion should take place
 #+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
-FUNCTION deleteEventFromNamedCalendar(event eventType,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
+FUNCTION deleteEventFromNamedCalendar(event eventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
@@ -591,7 +586,7 @@ END FUNCTION
 #+ return whether the given event is a recurring event
 #+ @param event event returned by findEvents...
 #+ @return TRUE is recurring, FALSE if NOT recurring
-FUNCTION isRecurring(event eventType)
+FUNCTION isRecurring(event eventT) RETURNS BOOLEAN
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
 
@@ -603,16 +598,16 @@ END FUNCTION
 #+
 #+ @code
 #+   DEFINE options fglcdvCalendar.findOptionsT
-#+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventType
+#+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
 #+   LET options=fglcdvCalendar.getFindOptions()
 #+   LET options.startTime=CURRENT
 #+   LET options.endTime=CURRENT+7
 #+   --return the events for 1 week in the default calendar
 #+   CALL fglcdvCalendar.findEventWithOptions(options) RETURNING eventArr
 #+
-FUNCTION findEventsWithOptions(options findOptionsT) RETURNS DYNAMIC ARRAY OF eventType,STRING
+FUNCTION findEventsWithOptions(options findOptionsT) RETURNS DYNAMIC ARRAY OF eventT,STRING
   DEFINE arr DYNAMIC ARRAY OF eventTypeInternal
-  DEFINE results DYNAMIC ARRAY OF eventType
+  DEFINE results DYNAMIC ARRAY OF eventT
   DEFINE internal RECORD
     title STRING ATTRIBUTE(json_null="null"),
     location STRING ATTRIBUTE(json_null="null"),
@@ -788,6 +783,6 @@ END FUNCTION
 
 #+ gives back the last Error message of the previous operation 
 #+ @return the error message
-FUNCTION getLastError()
+FUNCTION getLastError() RETURNS STRING
   RETURN m_error
 END FUNCTION

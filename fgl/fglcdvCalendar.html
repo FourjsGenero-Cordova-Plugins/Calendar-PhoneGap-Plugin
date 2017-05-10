@@ -16,95 +16,122 @@
 <td>Prev</td>
 <td>Next</td>
 </tr></table>
-<br><small>Summary: <a href="#function_summary">FUNCTION</a></small><hr>
+<br><small>Summary: <a href="#type_summary">TYPE</a> <a href="#function_summary">FUNCTION</a></small><hr>
 <b>fgl</b><h1>fglcdvCalendar</h1>
 <p> Genero 4GL wrapper around the Calendar plugin
  at https://github.com/FourjsGenero-Cordova-Plugins/Calendar-PhoneGap-Plugin</p>
-<a id="function_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
+<a id="type_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
+<tr><th class="summary" colspan="1">TYPE Summary</th></tr>
+<tr><td class="summary-text">
+<b><a href="#CALENDAR_DATE">CALENDAR_DATE</a></b> DATETIME YEAR TO SECOND<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#TIME_AS_NUMBER">TIME_AS_NUMBER</a></b> DECIMAL<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#attendeesT">attendeesT</a></b> RECORD<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#calendarT">calendarT</a></b> RECORD<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#eventT">eventT</a></b> RECORD<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#findOptionsT">findOptionsT</a></b> RECORD<br>
+</td></tr>
+</table>
+<br><a id="function_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
 <tr><th class="summary" colspan="2">FUNCTION Summary</th></tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING)<br> Creates a new Calendar
+<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING) RETURNS STRING<br> Creates a new Calendar
  (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createEventInteractively">createEventInteractively</a></b>(options RECORD)<br> Creates a new Event interactively with a native UI dialog</td>
+<b><a href="#createEventInteractively">createEventInteractively</a></b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> Creates a new Event interactively with a native UI dialog</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createEventWithOptions">createEventWithOptions</a></b>(options RECORD)<br> Creates a new Event</td>
+<b><a href="#createEventWithOptions">createEventWithOptions</a></b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> Creates a new Event</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#dateTime2MilliSinceEpoch">dateTime2MilliSinceEpoch</a></b>(d DATETIME YEAR TO SECOND)<br> Converts a 4GL date into the milliseconds since 1970 
+<b><a href="#dateTime2MilliSinceEpoch">dateTime2MilliSinceEpoch</a></b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)<br> Converts a 4GL date into the milliseconds since 1970 
  (this is what a new Date.getTime() returns in JS)</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteCalendar">deleteCalendar</a></b>(calendarName STRING)<br> Deletes the given calendar</td>
+<b><a href="#deleteCalendar">deleteCalendar</a></b>(calendarName STRING) RETURNS STRING<br> Deletes the given calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEvent">deleteEvent</a></b>(event RECORD, spanFutureEvents BOOLEAN)<br> Deletes an event for the active calendar</td>
+<b><a href="#deleteEvent">deleteEvent</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event RECORD, spanFutureEvents BOOLEAN, calendarName STRING)<br> Deletes an event for a specific calendar : IOS only .</td>
+<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar : IOS only .</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions RECORD, spanFutureEvents BOOLEAN, calendarName STRING)<br> Deletes an event for a specific calendar : IOS only .
+<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar : IOS only .
  The given parameters are used to identify one or more events
  so for example events in a given time frame can be deleted.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions RECORD, spanFutureEvents BOOLEAN)<br> Deletes an event for the active calendar
+<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar
  the given parameters are used to identify one or more events
  so for example events in a given time frame can be deleted</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options RECORD)<br> finds events either via id or by the combination of title...endTime
+<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> finds events either via id or by the combination of title...endTime
  the calendarName option is only valid under IOS and only effective if
  id is not set</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#getFindOptions">getFindOptions</a></b>()<br> Helper function for findEventsWithOptions</td>
+<b><a href="#getFindOptions">getFindOptions</a></b>() RETURNS <a href="#findOptionsT">findOptionsT</a><br> Helper function for findEventsWithOptions</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#getLastError">getLastError</a></b>()<br> gives back the last Error message of the previous operation </td>
+<b><a href="#getLastError">getLastError</a></b>() RETURNS STRING<br> gives back the last Error message of the previous operation </td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasReadPermission">hasReadPermission</a></b>()<br> Checks if we are allowed to read from the Calendar
+<b><a href="#hasReadPermission">hasReadPermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read from the Calendar
  On IOS this includes also the write permission</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasReadWritePermission">hasReadWritePermission</a></b>()<br> Checks if we are allowed to read/write information from/to the Calendar</td>
+<b><a href="#hasReadWritePermission">hasReadWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read/write information from/to the Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasWritePermission">hasWritePermission</a></b>()<br> Checks if we are allowed to write information to the Calendar
+<b><a href="#hasWritePermission">hasWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to write information to the Calendar
  On IOS this include also the read permission</td>
 </tr>
 <tr>
@@ -116,54 +143,190 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#isRecurring">isRecurring</a></b>(event RECORD)<br> return whether the given event is a recurring event</td>
+<b><a href="#isRecurring">isRecurring</a></b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN<br> return whether the given event is a recurring event</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#listCalendars">listCalendars</a></b>()<br> Returns a list of all calendars</td>
+<b><a href="#listCalendars">listCalendars</a></b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING<br> Returns a list of all calendars</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#main">main</a></b>()<br>
-</td>
+<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event <a href="#eventT">eventT</a>) RETURNS STRING<br> modifies the given event in a native UI dialog</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event RECORD)<br> modifies the given event in a native UI dialog</td>
+<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> this function is implemented only on IOS and allows to modify an existing event</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions RECORD, changeOptions RECORD)<br> this function is implemented only on IOS and allows to modify an existing event</td>
+<b><a href="#openCalendar">openCalendar</a></b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)<br> opens the calendar app on the device for a specific date</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#openCalendar">openCalendar</a></b>(d DATETIME YEAR TO SECOND)<br> opens the calendar app on the device for a specific date</td>
-</tr>
-<tr>
-<td class="summary-text"></td>
-<td class="summary-text">
-<b><a href="#requestReadPermission">requestReadPermission</a></b>()<br> Explicitly show the permission dialog in case we have no permission
+<b><a href="#requestReadPermission">requestReadPermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission
  On IOS this includes also the write permission</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#requestReadWritePermission">requestReadWritePermission</a></b>()<br> Explicitly show the permission dialog in case we have no permission</td>
+<b><a href="#requestReadWritePermission">requestReadWritePermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#requestWritePermission">requestWritePermission</a></b>()<br> Explicitly show the permission dialog in case we have no permission</td>
+<b><a href="#requestWritePermission">requestWritePermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission</td>
 </tr>
 </table>
-<br><h2>Functions</h2>
+<br><h2>Types</h2>
+<a id="CALENDAR_DATE"> </a><h3>CALENDAR_DATE</h3>
+<tt>TYPE <b>CALENDAR_DATE</b> DATETIME YEAR TO SECOND</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="RecurrenceRuleT"> </a><h3>RecurrenceRuleT</h3>
+<tt>TYPE <b>RecurrenceRuleT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>freq STRING</td></tr>
+<tr><td>interval INTEGER</td></tr>
+<tr><td>wkst STRING</td></tr>
+<tr><td>byday STRING</td></tr>
+<tr><td>bymonthday STRING</td></tr>
+<tr><td>until <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>count INTEGER</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="TIME_AS_NUMBER"> </a><h3>TIME_AS_NUMBER</h3>
+<tt>TYPE <b>TIME_AS_NUMBER</b> DECIMAL</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="attendeesT"> </a><h3>attendeesT</h3>
+<tt>TYPE <b>attendeesT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>name STRING</td></tr>
+<tr><td>URL STRING</td></tr>
+<tr><td>status STRING</td></tr>
+<tr><td>type STRING</td></tr>
+<tr><td>role STRING</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="calendarT"> </a><h3>calendarT</h3>
+<tt>TYPE <b>calendarT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>id STRING</td></tr>
+<tr><td>name STRING</td></tr>
+<tr><td>type STRING</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="eventOptionsT"> </a><h3>eventOptionsT</h3>
+<tt>TYPE <b>eventOptionsT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>title STRING</td></tr>
+<tr><td>location STRING</td></tr>
+<tr><td>notes STRING</td></tr>
+<tr><td>startDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>endDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>options RECORD
+        <table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>allday BOOLEAN</td></tr>
+<tr><td>firstReminderMinutes INTEGER</td></tr>
+<tr><td>secondReminderMinutes INTEGER</td></tr>
+<tr><td>recurrence STRING</td></tr>
+<tr><td>recurrenceInterval INTEGER</td></tr>
+<tr><td>recurrenceEndDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>calendarName STRING</td></tr>
+<tr><td>calendarId STRING</td></tr>
+<tr><td>url STRING</td></tr>
+<tr><td>spanFutureEvents BOOLEAN</td></tr>
+</table></td>
+</tr></table> END RECORD
+      </td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="eventT"> </a><h3>eventT</h3>
+<tt>TYPE <b>eventT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>title STRING</td></tr>
+<tr><td>calendar STRING</td></tr>
+<tr><td>id STRING</td></tr>
+<tr><td>startDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>endDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>lastModified <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>firstReminderMinutes FLOAT</td></tr>
+<tr><td>secondReminderMinutes FLOAT</td></tr>
+<tr><td>location STRING</td></tr>
+<tr><td>url STRING</td></tr>
+<tr><td>notes STRING</td></tr>
+<tr><td>allday BOOLEAN</td></tr>
+<tr><td>attendees DYNAMIC ARRAY OF  <a href="#attendeesT">attendeesT</a>
+</td></tr>
+<tr><td>rrule <a href="#RecurrenceRuleT">RecurrenceRuleT</a>
+</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="findOptionsT"> </a><h3>findOptionsT</h3>
+<tt>TYPE <b>findOptionsT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>title STRING</td></tr>
+<tr><td>location STRING</td></tr>
+<tr><td>notes STRING</td></tr>
+<tr><td>startDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>endDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>id STRING</td></tr>
+<tr><td>calendarName STRING</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<h2>Functions</h2>
 <a id="createCalendar"> </a><h3>createCalendar</h3>
-<tt>FUNCTION <b>createCalendar</b>(calendarName STRING, color STRING)</tt><dl>
+<tt>FUNCTION <b>createCalendar</b>(calendarName STRING, color STRING) RETURNS STRING</tt><dl>
 <dd><p> Creates a new Calendar
  (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</p></dd>
 <dd><dl>
@@ -178,7 +341,7 @@
 </dl>
 <hr>
 <a id="createEventInteractively"> </a><h3>createEventInteractively</h3>
-<tt>FUNCTION <b>createEventInteractively</b>(options RECORD)</tt><dl>
+<tt>FUNCTION <b>createEventInteractively</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd><p> Creates a new Event interactively with a native UI dialog</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -195,7 +358,7 @@
 </dl>
 <hr>
 <a id="createEventWithOptions"> </a><h3>createEventWithOptions</h3>
-<tt>FUNCTION <b>createEventWithOptions</b>(options RECORD)</tt><dl>
+<tt>FUNCTION <b>createEventWithOptions</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd><p> Creates a new Event</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -212,7 +375,7 @@
 </dl>
 <hr>
 <a id="dateTime2MilliSinceEpoch"> </a><h3>dateTime2MilliSinceEpoch</h3>
-<tt>FUNCTION <b>dateTime2MilliSinceEpoch</b>(d DATETIME YEAR TO SECOND)</tt><dl>
+<tt>FUNCTION <b>dateTime2MilliSinceEpoch</b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)</tt><dl>
 <dd><p> Converts a 4GL date into the milliseconds since 1970 
  (this is what a new Date.getTime() returns in JS)</p></dd>
 <dd><dl>
@@ -227,7 +390,7 @@
 </dl>
 <hr>
 <a id="deleteCalendar"> </a><h3>deleteCalendar</h3>
-<tt>FUNCTION <b>deleteCalendar</b>(calendarName STRING)</tt><dl>
+<tt>FUNCTION <b>deleteCalendar</b>(calendarName STRING) RETURNS STRING</tt><dl>
 <dd><p> Deletes the given calendar</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -241,7 +404,7 @@
 </dl>
 <hr>
 <a id="deleteEvent"> </a><h3>deleteEvent</h3>
-<tt>FUNCTION <b>deleteEvent</b>(event RECORD, spanFutureEvents BOOLEAN)</tt><dl>
+<tt>FUNCTION <b>deleteEvent</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
 <dd><p> Deletes an event for the active calendar</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -255,7 +418,7 @@
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendar"> </a><h3>deleteEventFromNamedCalendar</h3>
-<tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event RECORD, spanFutureEvents BOOLEAN, calendarName STRING)</tt><dl>
+<tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
 <dd><p> Deletes an event for a specific calendar : IOS only .</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -269,7 +432,7 @@
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendarWithFindOptions"> </a><h3>deleteEventFromNamedCalendarWithFindOptions</h3>
-<tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions RECORD, spanFutureEvents BOOLEAN, calendarName STRING)</tt><dl>
+<tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
 <dd><p> Deletes an event for a specific calendar : IOS only .
  The given parameters are used to identify one or more events
  so for example events in a given time frame can be deleted.</p></dd>
@@ -285,7 +448,7 @@
 </dl>
 <hr>
 <a id="deleteEventWithFindOptions"> </a><h3>deleteEventWithFindOptions</h3>
-<tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions RECORD, spanFutureEvents BOOLEAN)</tt><dl>
+<tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
 <dd><p> Deletes an event for the active calendar
  the given parameters are used to identify one or more events
  so for example events in a given time frame can be deleted</p></dd>
@@ -301,14 +464,14 @@
 </dl>
 <hr>
 <a id="findEventsWithOptions"> </a><h3>findEventsWithOptions</h3>
-<tt>FUNCTION <b>findEventsWithOptions</b>(options RECORD)</tt><dl>
+<tt>FUNCTION <b>findEventsWithOptions</b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING</tt><dl>
 <dd>
 <p> finds events either via id or by the combination of title...endTime
  the calendarName option is only valid under IOS and only effective if
  id is not set</p>
 <p>
       <span><pre>   DEFINE options fglcdvCalendar.findOptionsT
-   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventType
+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
    LET options=fglcdvCalendar.getFindOptions()
    LET options.startTime=CURRENT
    LET options.endTime=CURRENT+7
@@ -328,7 +491,7 @@
 </dl>
 <hr>
 <a id="getFindOptions"> </a><h3>getFindOptions</h3>
-<tt>FUNCTION <b>getFindOptions</b>()</tt><dl>
+<tt>FUNCTION <b>getFindOptions</b>() RETURNS <a href="#findOptionsT">findOptionsT</a></tt><dl>
 <dd><p> Helper function for findEventsWithOptions</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -338,7 +501,7 @@
 </dl>
 <hr>
 <a id="getLastError"> </a><h3>getLastError</h3>
-<tt>FUNCTION <b>getLastError</b>()</tt><dl>
+<tt>FUNCTION <b>getLastError</b>() RETURNS STRING</tt><dl>
 <dd><p> gives back the last Error message of the previous operation </p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -348,7 +511,7 @@
 </dl>
 <hr>
 <a id="hasReadPermission"> </a><h3>hasReadPermission</h3>
-<tt>FUNCTION <b>hasReadPermission</b>()</tt><dl>
+<tt>FUNCTION <b>hasReadPermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Checks if we are allowed to read from the Calendar
  On IOS this includes also the write permission</p></dd>
 <dd><dl>
@@ -359,7 +522,7 @@
 </dl>
 <hr>
 <a id="hasReadWritePermission"> </a><h3>hasReadWritePermission</h3>
-<tt>FUNCTION <b>hasReadWritePermission</b>()</tt><dl>
+<tt>FUNCTION <b>hasReadWritePermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Checks if we are allowed to read/write information from/to the Calendar</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -369,7 +532,7 @@
 </dl>
 <hr>
 <a id="hasWritePermission"> </a><h3>hasWritePermission</h3>
-<tt>FUNCTION <b>hasWritePermission</b>()</tt><dl>
+<tt>FUNCTION <b>hasWritePermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Checks if we are allowed to write information to the Calendar
  On IOS this include also the read permission</p></dd>
 <dd><dl>
@@ -387,7 +550,7 @@
 </dl>
 <hr>
 <a id="isRecurring"> </a><h3>isRecurring</h3>
-<tt>FUNCTION <b>isRecurring</b>(event RECORD)</tt><dl>
+<tt>FUNCTION <b>isRecurring</b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN</tt><dl>
 <dd><p> return whether the given event is a recurring event</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -401,7 +564,7 @@
 </dl>
 <hr>
 <a id="listCalendars"> </a><h3>listCalendars</h3>
-<tt>FUNCTION <b>listCalendars</b>()</tt><dl>
+<tt>FUNCTION <b>listCalendars</b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING</tt><dl>
 <dd><p> Returns a list of all calendars</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -410,25 +573,22 @@
 </dl></dd>
 </dl>
 <hr>
-<a id="main"> </a><h3>main</h3>
-<tt>FUNCTION <b>main</b>()</tt><dl>
-<dd></dd>
-<dd><dl></dl></dd>
-</dl>
-<hr>
 <a id="modifyEventInteractively"> </a><h3>modifyEventInteractively</h3>
-<tt>FUNCTION <b>modifyEventInteractively</b>(event RECORD)</tt><dl>
+<tt>FUNCTION <b>modifyEventInteractively</b>(event <a href="#eventT">eventT</a>) RETURNS STRING</tt><dl>
 <dd><p> modifies the given event in a native UI dialog</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
 <code>event</code> - the event to modify<br>
 </dd>
+<dt><b>Returns:</b></dt>
+<dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog<br>
+</dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="modifyEventWithOptions"> </a><h3>modifyEventWithOptions</h3>
-<tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions RECORD, changeOptions RECORD)</tt><dl>
+<tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd><p> this function is implemented only on IOS and allows to modify an existing event</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -445,7 +605,7 @@
 </dl>
 <hr>
 <a id="openCalendar"> </a><h3>openCalendar</h3>
-<tt>FUNCTION <b>openCalendar</b>(d DATETIME YEAR TO SECOND)</tt><dl>
+<tt>FUNCTION <b>openCalendar</b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)</tt><dl>
 <dd><p> opens the calendar app on the device for a specific date</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -456,7 +616,7 @@
 </dl>
 <hr>
 <a id="requestReadPermission"> </a><h3>requestReadPermission</h3>
-<tt>FUNCTION <b>requestReadPermission</b>()</tt><dl>
+<tt>FUNCTION <b>requestReadPermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Explicitly show the permission dialog in case we have no permission
  On IOS this includes also the write permission</p></dd>
 <dd><dl>
@@ -467,7 +627,7 @@
 </dl>
 <hr>
 <a id="requestReadWritePermission"> </a><h3>requestReadWritePermission</h3>
-<tt>FUNCTION <b>requestReadWritePermission</b>()</tt><dl>
+<tt>FUNCTION <b>requestReadWritePermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Explicitly show the permission dialog in case we have no permission</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -477,7 +637,7 @@
 </dl>
 <hr>
 <a id="requestWritePermission"> </a><h3>requestWritePermission</h3>
-<tt>FUNCTION <b>requestWritePermission</b>()</tt><dl>
+<tt>FUNCTION <b>requestWritePermission</b>() RETURNS BOOLEAN</tt><dl>
 <dd><p> Explicitly show the permission dialog in case we have no permission</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>

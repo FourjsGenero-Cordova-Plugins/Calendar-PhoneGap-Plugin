@@ -17,7 +17,7 @@ IMPORT FGL fgldialog
 IMPORT FGL fglcdvCalendar
 DEFINE calOptions fglcdvCalendar.eventOptionsT
 DEFINE calArr DYNAMIC ARRAY OF fglcdvCalendar.calendarT
-DEFINE evArr DYNAMIC ARRAY OF fglcdvCalendar.eventType
+DEFINE evArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
 TYPE displayEventT RECORD
     title STRING,
     startDate DATETIME YEAR TO MINUTE
@@ -155,7 +155,7 @@ END FUNCTION
 FUNCTION displayEvents(calendarName STRING)
   DEFINE result,newTitle,id,freq,newfreq STRING
   DEFINE i,refreshRow,dummy INT
-  DEFINE event,ev fglcdvCalendar.eventType
+  DEFINE event,ev fglcdvCalendar.eventT
   DEFINE changeOpts fglcdvCalendar.eventOptionsT
   DEFINE findOpts fglcdvCalendar.findOptionsT
   DEFINE sArr DYNAMIC ARRAY OF displayEventT
@@ -281,7 +281,7 @@ FUNCTION newTitle(base STRING,sArr DYNAMIC ARRAY OF displayEventT)
   RETURN "Bummer"
 END FUNCTION
 
-FUNCTION askDeleteFutureEvents(event fglcdvCalendar.eventType)
+FUNCTION askDeleteFutureEvents(event fglcdvCalendar.eventT)
   DEFINE spanFutureEvents BOOLEAN
   DEFINE cancelDelete BOOLEAN
   IF fglcdvCalendar.isRecurring(event.*) THEN
@@ -300,7 +300,7 @@ FUNCTION askDeleteFutureEvents(event fglcdvCalendar.eventType)
   RETURN spanFutureEvents,cancelDelete
 END FUNCTION
 
-FUNCTION askModifyFutureEvents(event fglcdvCalendar.eventType)
+FUNCTION askModifyFutureEvents(event fglcdvCalendar.eventT)
   DEFINE spanFutureEvents BOOLEAN
   DEFINE cancelModify BOOLEAN
   IF fglcdvCalendar.isRecurring(event.*) THEN
@@ -320,7 +320,7 @@ FUNCTION askModifyFutureEvents(event fglcdvCalendar.eventType)
 END FUNCTION
 
 #+ returns true if the event has been modified
-FUNCTION showOrUpdateEvent(event fglcdvCalendar.eventType,
+FUNCTION showOrUpdateEvent(event fglcdvCalendar.eventT,
                         sArr DYNAMIC ARRAY OF displayEventT) RETURNS BOOLEAN
   DEFINE changeOpts fglcdvCalendar.eventOptionsT
   DEFINE spanFutureEvents,cancelModify,modified BOOLEAN
@@ -398,10 +398,10 @@ LABEL inputAgain:
   RETURN modified
 END FUNCTION
 
-FUNCTION modifyEvent(event fglcdvCalendar.eventType,
+FUNCTION modifyEvent(event fglcdvCalendar.eventT,
                      changeOpts fglcdvCalendar.eventOptionsT,
                      sArr DYNAMIC ARRAY OF displayEventT)
-                     RETURNS fglcdvCalendar.eventType
+                     RETURNS fglcdvCalendar.eventT
   DEFINE result STRING
   DEFINE findOptions fglcdvCalendar.findOptionsT
   INITIALIZE findOptions.* TO NULL
@@ -422,8 +422,8 @@ END FUNCTION
 --fetches a particular event by id + options
 FUNCTION fetchEvent(eventId STRING,options fglcdvCalendar.eventOptionsT)
   DEFINE findOpts fglcdvCalendar.findOptionsT
-  DEFINE findArr DYNAMIC ARRAY OF fglcdvCalendar.eventType
-  DEFINE event fglcdvCalendar.eventType
+  DEFINE findArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
+  DEFINE event fglcdvCalendar.eventT
   DEFINE err STRING
   CALL fglcdvCalendar.getFindOptions() RETURNING findOpts.*
   ASSIGN_RECORD(options,findOpts)
