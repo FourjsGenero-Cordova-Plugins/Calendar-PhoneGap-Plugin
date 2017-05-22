@@ -475,7 +475,7 @@ END FUNCTION
 
 #+ Returns a list of all calendars
 #+ @return a list of calendars + a non NULL error string in the error case
-FUNCTION listCalendars() RETURNS DYNAMIC ARRAY OF calendarT,STRING
+FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
   DEFINE internal DYNAMIC ARRAY OF RECORD
     id STRING,
     name STRING,
@@ -605,7 +605,7 @@ END FUNCTION
 #+   --return the events for 1 week in the default calendar
 #+   CALL fglcdvCalendar.findEventWithOptions(options) RETURNING eventArr
 #+
-FUNCTION findEventsWithOptions(options findOptionsT) RETURNS DYNAMIC ARRAY OF eventT,STRING
+FUNCTION findEventsWithOptions(options findOptionsT) RETURNS (DYNAMIC ARRAY OF eventT,STRING)
   DEFINE arr DYNAMIC ARRAY OF eventTypeInternal
   DEFINE results DYNAMIC ARRAY OF eventT
   DEFINE internal RECORD
