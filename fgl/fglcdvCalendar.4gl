@@ -128,13 +128,13 @@ TYPE eventTypeInternal RECORD --return type for find function
      END RECORD
 END RECORD
 
---private types and variables
+--Private types and variables
 --The plugin requires in several places startTime and endTime as
---milliseconds since 1970, we expose those as startDate and endDate to the 4GL side
---furthermore the iOS plugin is very picky about getting NULL values
---as explicit null JSON literals ,otherwise crashes may occur
+--milliseconds since 1970. We expose those as startDate and endDate to the 4GL side
+--Furthermore, the iOS plugin is very picky about getting NULL values
+--as explicit null JSON literals, otherwise crashes might occur.
 
---helper macro to save a lot of boilerplate conversion between
+--Helper macro to save a lot of boilerplate conversion between
 --different record types
 &define ASSIGN_RECORD(src,dest) CALL util.JSON.parse(util.JSON.stringify(src),dest)
 
@@ -174,16 +174,16 @@ END RECORD
 
 DEFINE m_error STRING --holds the error message from the last operation
 
-#+ inits the plugin
-#+ must be called prior other calls
+#+ Initializes the plugin
+#+ Must be called prior other calls
 PUBLIC FUNCTION init()
   DEFINE doc om.DomDocument
   DEFINE root,n,p om.DomNode
   DEFINE nlm,nld om.NodeList
-#+ GMI:if the plugin initialization is done in the very first instructions
-#+ of the mobile program the delaying mechanism for the splash screen
+#+ GMI: If the plugin is initialized in the very first instructions
+#+ of the mobile program, the delaying mechanism for the splash screen
 #+ may block the whole startup (because the plugin initialization blocks the main thread), 
-#+ so we create a temporary Menu to let the IOS event loop kick in 
+#+ so we create a temporary menu to let the IOS event loop kick in.
   IF ui.Interface.getFrontEndName()=="GMI" OR ui.Interface.getFrontEndName()=="GMA" THEN
     LET doc=ui.Interface.getDocument()
     LET root=doc.getDocumentElement()
@@ -276,10 +276,10 @@ END FUNCTION
 
 #+ Creates a new Event
 #+ @param options see eventOptionsT
-#+ @return an event id on success, NULL in the error case
-#+ use getLastError() to retrieve the error message
-#+ on IOS the event id can be used to modify or delete the event
-#+ on Android the event id can not be used for further operations
+#+ @return an event id on success, NULL in case of error.
+#+ Use getLastError() to retrieve the error message
+#+ On IOS, the event id can be used to modify or delete the event.
+#+ On Android, the event id cannot be used for further operations.
 PUBLIC FUNCTION createEventWithOptions(options eventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
@@ -294,10 +294,10 @@ END FUNCTION
 
 #+ Creates a new Event interactively with a native UI dialog
 #+ @param options see eventOptionsT
-#+ @return an event id on success, NULL in the error case
-#+ use getLastError() to retrieve the error message
-#+ on IOS the event id can be used to modify or delete the event
-#+ on Android the event id can not be used for further operations
+#+ @return an event id on success, NULL in case of error.
+#+ Use getLastError() to retrieve the error message.
+#+ On IOS, the event id can be used to modify or delete the event.
+#+ On Android, the event id cannot be used for further operations.
 PUBLIC FUNCTION createEventInteractively(options eventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
@@ -312,10 +312,10 @@ END FUNCTION
 
 {
 #+ Return all events for a given calendar.
-#+ Convenient for quickly looking whats inside a calendar
-#+ IOS only , on Android the call fails, therefore for production use only findEventsWithOptions().
-#+ @param calendarName must not be NULL
-#+ @return all events and an error string in case the operation failed
+#+ Convenient for quickly looking inside a calendar.
+#+ IOS only, on Android the call fails. Therefore for production, use only findEventsWithOptions().
+#+ @param calendarName must not be NULL.
+#+ @return all events and an error string in case the operation failed.
 PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING) 
            --RETURNS DYNAMIC ARRAY OF eventT ,STRING
   DEFINE arr DYNAMIC ARRAY OF eventT
@@ -334,10 +334,10 @@ PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING)
 END FUNCTION
 }
 
-#+ Creates a new Calendar
+#+ Creates a new Calendar.
 #+ (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )
-#+ @param calendarName name for the newly created calendar
-#+ @param color a webbish rgb value a la '#ff0000' is required, or NULL
+#+ @param calendarName name for the newly created calendar.
+#+ @param color a webbish RGB value such as '#ff0000' is required, or NULL
 #+ @return NULL on error, an id for the created calendar
 FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
   DEFINE result STRING
@@ -356,13 +356,13 @@ FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
   RETURN result
 END FUNCTION
 
-#+ this function is implemented only on IOS and allows to modify an existing event
+#+ This function is implemented only on IOS and allows to modify an existing event.
 #+ @param findOptions if the find options contain a valid event id 
-#+ (returned by createEventWithOptions) the changes act on that event
-#+ using NULL for the id uses the title,location etc to find the event
-#+ @param changeOptions contains the values to be override the old values in the event 
-#+ @return the event Identifier if a change took place, NULL otherwise
-#+ in the error case the error can be retrieved with getLastError()
+#+ (returned by createEventWithOptions) the changes act on that event.
+#+ Using NULL for the id uses the title, location, etc. to find the event
+#+ @param changeOptions contains the values to override the old values in the event. 
+#+ @return the event Identifier if a change took place, NULL otherwise.
+#+ In case of error, the error can be retrieved with getLastError()
 FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -451,9 +451,9 @@ FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETUR
 END FUNCTION
 }
 
-#+ modifies the given event in a native UI dialog
+#+ Modifies the given event in a native UI dialog.
 #+ @param event the event to modify
-#+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog
+#+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
 FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
@@ -462,8 +462,8 @@ FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
   RETURN modifyEventInteractivelyWithFindOptions(findOpts.*)
 END FUNCTION
 
-#+ opens the calendar app on the device for a specific date
-#+ @param d The date the calendar app should display
+#+ Opens the calendar app on the device for a specific date.
+#+ @param d The date to display in the calendar app.
 FUNCTION openCalendar(d CALENDAR_DATE)
   DEFINE options RECORD
     date TIME_AS_NUMBER
@@ -473,8 +473,8 @@ FUNCTION openCalendar(d CALENDAR_DATE)
                              [CALENDAR,"openCalendar",options],[])
 END FUNCTION
 
-#+ Returns a list of all calendars
-#+ @return a list of calendars + a non NULL error string in the error case
+#+ Returns a list of all calendars.
+#+ @return a list of calendars + a non NULL error string in case of error.
 FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
   DEFINE internal DYNAMIC ARRAY OF RECORD
     id STRING,
@@ -503,7 +503,7 @@ FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
 END FUNCTION
 
 {
-#+ does nothing on IOS, need to be checked on Android
+#+ Does nothing on IOS, needs to be checked on Android.
 FUNCTION listEventsInRange()
   DEFINE result STRING
   CALL ui.Interface.frontCall(CORDOVA,_CALL,
@@ -511,13 +511,13 @@ FUNCTION listEventsInRange()
 END FUNCTION
 }
 
-#+ Deletes an event for a specific calendar : IOS only .
-#+ The given parameters are used to identify one or more events
+#+ Deletes an event for a specific calendar : IOS only.
+#+ The given parameters are used to identify one or more events,
 #+ so for example events in a given time frame can be deleted.
-#+ @param findOptions same as for finding an event
-#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
+#+ @param findOptions same as for finding an event.
+#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place
-#+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
+#+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
 FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions findOptionsT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
   DEFINE internal deleteOptionsT
   DEFINE result STRING
@@ -542,20 +542,20 @@ FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions findOptionsT,sp
   RETURN result
 END FUNCTION
 
-#+ Deletes an event for the active calendar
-#+ the given parameters are used to identify one or more events
-#+ so for example events in a given time frame can be deleted
+#+ Deletes an event for the active calendar.
+#+ The given parameters are used to identify one or more events,
+#+ so for example events in a given time frame can be deleted.
 #+ @param findOptions same as for finding an event
-#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
-#+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
+#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
+#+ @return NULL in the error case, an non NULL string if the deletion was successful. Use getLastError() to get the error reason
 FUNCTION deleteEventWithFindOptions(findOptions findOptionsT,spanFutureEvents BOOLEAN) RETURNS STRING
   RETURN deleteEventFromNamedCalendarWithFindOptions(findOptions.*,spanFutureEvents,NULL)
 END FUNCTION
 
-#+ Deletes an event for the active calendar
+#+ Deletes an event for the active calendar.
 #+ @param event structure returned by findEvent
-#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
-#+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
+#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
+#+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
 FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
@@ -563,11 +563,11 @@ FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
   RETURN deleteEventWithFindOptions(findOpts.*,spanFutureEvents)
 END FUNCTION
 
-#+ Deletes an event for a specific calendar : IOS only .
-#+ @param event structure returned by findEvent
-#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted
-#+ @param calendarName calendar where the deletion should take place
-#+ @return NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason
+#+ Deletes an event for a specific calendar: IOS only .
+#+ @param event structure returned by findEvent.
+#+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
+#+ @param calendarName calendar where the deletion should take place.
+#+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
 FUNCTION deleteEventFromNamedCalendar(event eventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
   DEFINE findOpts findOptionsT
   INITIALIZE findOpts.* TO NULL
@@ -583,16 +583,16 @@ FUNCTION getFindOptions() RETURNS findOptionsT
   RETURN fo.*
 END FUNCTION
 
-#+ return whether the given event is a recurring event
+#+ Returns whether the given event is a recurring event.
 #+ @param event event returned by findEvents...
 #+ @return TRUE is recurring, FALSE if NOT recurring
 FUNCTION isRecurring(event eventT) RETURNS BOOLEAN
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
 
-#+ finds events either via id or by the combination of title...endTime
-#+ the calendarName option is only valid under IOS and only effective if 
-#+ id is not set
+#+ Finds events either via id or by the combination of title...endTime.
+#+ The calendarName option is only valid under IOS and only effective if 
+#+ id is not set.
 #+ @param options see findOptionsT
 #+ @return an array of events (can be empty) + an NOT NULL error string in the error case
 #+
