@@ -15,7 +15,7 @@ APPNAME             = CDVCalendar
 TARGET              = simulator
 TARGET              = phone
 MODE                = debug
-BUILD_FGL           = yes
+BUILD_FGL           = no
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
 
