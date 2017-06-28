@@ -25,8 +25,17 @@ ifneq ($(wildcard ../../fgl),)
 export FGLLDPATH    = ../../fgl
 endif
 
+MODULES  = $(patsubst %.4gl, %.42m, $(wildcard *.4gl))
+FORMS    = $(patsubst %.per, %.42f, $(wildcard *.per))
 
-USER_EXTENSION_LIBS = $(GMIDIR)/lib/cordova/CDVCalendar.a
+%.42m: %.4gl
+	fglcomp -M $*
+
+%.42f: %.per
+	fglform -M $*
+
+all:: $(MODULES) $(FORMS)
+
 
 #include the generic Makefile-gmi with a lot of targets
 ifndef GMIDIR
@@ -34,6 +43,15 @@ GMIDIR=$(FGLDIR)
 endif
 MAKEFILE_GMI=$(shell GMIDIR="$(GMIDIR)";echo $${GMIDIR// /\\ })/lib/Makefile-gmi
 -include $(MAKEFILE_GMI)
+
+# temporary workaround the transition from CDV prefixed plugin lib names to
+# github lib names
+
+USER_EXTENSION_LIBS=$(shell GMIDIR="$(GMIDIR)";echo $${GMIDIR// /\\ })/lib/cordova/CDVCalendar.a
+ifeq ($(wildcard $(USER_EXTENSION_LIBS)),)
+# new way
+  USER_EXTENSION_LIBS = -lCalendar-PhoneGap-plugin
+endif
 
 main.42m: calendars.42f events.42f newevent.42f
 
