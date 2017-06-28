@@ -26,25 +26,25 @@
 <b><a href="#CALENDAR_DATE">CALENDAR_DATE</a></b> DATETIME YEAR TO SECOND<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD<br>
+<b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD R10<br>
 </td></tr>
 <tr><td class="summary-text">
 <b><a href="#TIME_AS_NUMBER">TIME_AS_NUMBER</a></b> DECIMAL<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#attendeesT">attendeesT</a></b> RECORD<br>
+<b><a href="#attendeesT">attendeesT</a></b> RECORD R8<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#calendarT">calendarT</a></b> RECORD<br>
+<b><a href="#calendarT">calendarT</a></b> RECORD R4<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD<br>
+<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD R2<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#eventT">eventT</a></b> RECORD<br>
+<b><a href="#eventT">eventT</a></b> RECORD R12<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#findOptionsT">findOptionsT</a></b> RECORD<br>
+<b><a href="#findOptionsT">findOptionsT</a></b> RECORD R6<br>
 </td></tr>
 </table>
 <br><a id="function_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
@@ -52,7 +52,7 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING) RETURNS STRING<br> Creates a new Calendar
+<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING) RETURNS STRING<br> Creates a new Calendar.
  (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</td>
 </tr>
 <tr>
@@ -79,33 +79,33 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEvent">deleteEvent</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar</td>
+<b><a href="#deleteEvent">deleteEvent</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar : IOS only .</td>
+<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar: IOS only .</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar : IOS only .
- The given parameters are used to identify one or more events
+<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar : IOS only.
+ The given parameters are used to identify one or more events,
  so for example events in a given time frame can be deleted.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar
- the given parameters are used to identify one or more events
- so for example events in a given time frame can be deleted</td>
+<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar.
+ The given parameters are used to identify one or more events,
+ so for example events in a given time frame can be deleted.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> finds events either via id or by the combination of title...endTime
- the calendarName option is only valid under IOS and only effective if
- id is not set</td>
+<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> Finds events either via id or by the combination of title...endTime.
+ The calendarName option is only valid under IOS and only effective if
+ id is not set.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -137,33 +137,33 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#init">init</a></b>()<br> inits the plugin
- must be called prior other calls</td>
+<b><a href="#init">init</a></b>()<br> Initializes the plugin
+ Must be called prior other calls</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#isRecurring">isRecurring</a></b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN<br> return whether the given event is a recurring event</td>
+<b><a href="#isRecurring">isRecurring</a></b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN<br> Returns whether the given event is a recurring event.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#listCalendars">listCalendars</a></b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING<br> Returns a list of all calendars</td>
+<b><a href="#listCalendars">listCalendars</a></b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING<br> Returns a list of all calendars.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event <a href="#eventT">eventT</a>) RETURNS STRING<br> modifies the given event in a native UI dialog</td>
+<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event <a href="#eventT">eventT</a>) RETURNS STRING<br> Modifies the given event in a native UI dialog.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> this function is implemented only on IOS and allows to modify an existing event</td>
+<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> This function is implemented only on IOS and allows to modify an existing event.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#openCalendar">openCalendar</a></b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)<br> opens the calendar app on the device for a specific date</td>
+<b><a href="#openCalendar">openCalendar</a></b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)<br> Opens the calendar app on the device for a specific date.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -190,7 +190,7 @@
 </dl>
 <hr>
 <a id="RecurrenceRuleT"> </a><h3>RecurrenceRuleT</h3>
-<tt>TYPE <b>RecurrenceRuleT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>RecurrenceRuleT</b> RECORD R10<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>freq STRING</td></tr>
@@ -214,7 +214,7 @@
 </dl>
 <hr>
 <a id="attendeesT"> </a><h3>attendeesT</h3>
-<tt>TYPE <b>attendeesT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>attendeesT</b> RECORD R8<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>name STRING</td></tr>
@@ -229,7 +229,7 @@
 </dl>
 <hr>
 <a id="calendarT"> </a><h3>calendarT</h3>
-<tt>TYPE <b>calendarT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>calendarT</b> RECORD R4<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>id STRING</td></tr>
@@ -242,7 +242,7 @@
 </dl>
 <hr>
 <a id="eventOptionsT"> </a><h3>eventOptionsT</h3>
-<tt>TYPE <b>eventOptionsT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>eventOptionsT</b> RECORD R2<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -252,7 +252,7 @@
 </td></tr>
 <tr><td>endDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
 </td></tr>
-<tr><td>options RECORD
+<tr><td>options RECORD R1
         <table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
@@ -277,7 +277,7 @@
 </dl>
 <hr>
 <a id="eventT"> </a><h3>eventT</h3>
-<tt>TYPE <b>eventT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>eventT</b> RECORD R12<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -306,7 +306,7 @@
 </dl>
 <hr>
 <a id="findOptionsT"> </a><h3>findOptionsT</h3>
-<tt>TYPE <b>findOptionsT</b> RECORD<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>findOptionsT</b> RECORD R6<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -327,12 +327,12 @@
 <h2>Functions</h2>
 <a id="createCalendar"> </a><h3>createCalendar</h3>
 <tt>FUNCTION <b>createCalendar</b>(calendarName STRING, color STRING) RETURNS STRING</tt><dl>
-<dd><p> Creates a new Calendar
+<dd><p> Creates a new Calendar.
  (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>calendarName</code> - name for the newly created calendar<br><code>color</code> - a webbish rgb value a la '#ff0000' is required, or NULL<br>
+<code>calendarName</code> - name for the newly created calendar.<br><code>color</code> - a webbish RGB value such as '#ff0000' is required, or NULL<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>NULL on error, an id for the created calendar<br>
@@ -349,10 +349,10 @@
 <code>options</code> - see eventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>an event id on success, NULL in the error case
- use getLastError() to retrieve the error message
- on IOS the event id can be used to modify or delete the event
- on Android the event id can not be used for further operations<br>
+<dd>an event id on success, NULL in case of error.
+ Use getLastError() to retrieve the error message.
+ On IOS, the event id can be used to modify or delete the event.
+ On Android, the event id cannot be used for further operations.<br>
 </dd>
 </dl></dd>
 </dl>
@@ -366,10 +366,10 @@
 <code>options</code> - see eventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>an event id on success, NULL in the error case
- use getLastError() to retrieve the error message
- on IOS the event id can be used to modify or delete the event
- on Android the event id can not be used for further operations<br>
+<dd>an event id on success, NULL in case of error.
+ Use getLastError() to retrieve the error message
+ On IOS, the event id can be used to modify or delete the event.
+ On Android, the event id cannot be used for further operations.<br>
 </dd>
 </dl></dd>
 </dl>
@@ -405,60 +405,60 @@
 <hr>
 <a id="deleteEvent"> </a><h3>deleteEvent</h3>
 <tt>FUNCTION <b>deleteEvent</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
-<dd><p> Deletes an event for the active calendar</p></dd>
+<dd><p> Deletes an event for the active calendar.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>event</code> - structure returned by findEvent<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted<br>
+<code>event</code> - structure returned by findEvent<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason<br>
+<dd>NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendar"> </a><h3>deleteEventFromNamedCalendar</h3>
 <tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
-<dd><p> Deletes an event for a specific calendar : IOS only .</p></dd>
+<dd><p> Deletes an event for a specific calendar: IOS only .</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>event</code> - structure returned by findEvent<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted<br><code>calendarName</code> - calendar where the deletion should take place<br>
+<code>event</code> - structure returned by findEvent.<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.<br><code>calendarName</code> - calendar where the deletion should take place.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason<br>
+<dd>NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendarWithFindOptions"> </a><h3>deleteEventFromNamedCalendarWithFindOptions</h3>
 <tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
-<dd><p> Deletes an event for a specific calendar : IOS only .
- The given parameters are used to identify one or more events
+<dd><p> Deletes an event for a specific calendar : IOS only.
+ The given parameters are used to identify one or more events,
  so for example events in a given time frame can be deleted.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>findOptions</code> - same as for finding an event<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted<br><code>calendarName</code> - calendar where the deletion should take place<br>
+<code>findOptions</code> - same as for finding an event.<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.<br><code>calendarName</code> - calendar where the deletion should take place<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason<br>
+<dd>NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="deleteEventWithFindOptions"> </a><h3>deleteEventWithFindOptions</h3>
 <tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
-<dd><p> Deletes an event for the active calendar
- the given parameters are used to identify one or more events
- so for example events in a given time frame can be deleted</p></dd>
+<dd><p> Deletes an event for the active calendar.
+ The given parameters are used to identify one or more events,
+ so for example events in a given time frame can be deleted.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>findOptions</code> - same as for finding an event<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted<br>
+<code>findOptions</code> - same as for finding an event<br><code>spanFutureEvents</code> - If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>NULL in the error case, an non NULL string in the case the deletion was successful, use getLastError() to get the error reason<br>
+<dd>NULL in the error case, an non NULL string if the deletion was successful. Use getLastError() to get the error reason<br>
 </dd>
 </dl></dd>
 </dl>
@@ -466,9 +466,9 @@
 <a id="findEventsWithOptions"> </a><h3>findEventsWithOptions</h3>
 <tt>FUNCTION <b>findEventsWithOptions</b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING</tt><dl>
 <dd>
-<p> finds events either via id or by the combination of title...endTime
- the calendarName option is only valid under IOS and only effective if
- id is not set</p>
+<p> Finds events either via id or by the combination of title...endTime.
+ The calendarName option is only valid under IOS and only effective if
+ id is not set.</p>
 <p>
       <span><pre>   DEFINE options fglcdvCalendar.findOptionsT
    DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
@@ -544,14 +544,14 @@
 <hr>
 <a id="init"> </a><h3>init</h3>
 <tt>FUNCTION <b>init</b>()</tt><dl>
-<dd><p> inits the plugin
- must be called prior other calls</p></dd>
+<dd><p> Initializes the plugin
+ Must be called prior other calls</p></dd>
 <dd><dl></dl></dd>
 </dl>
 <hr>
 <a id="isRecurring"> </a><h3>isRecurring</h3>
 <tt>FUNCTION <b>isRecurring</b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN</tt><dl>
-<dd><p> return whether the given event is a recurring event</p></dd>
+<dd><p> Returns whether the given event is a recurring event.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -565,52 +565,52 @@
 <hr>
 <a id="listCalendars"> </a><h3>listCalendars</h3>
 <tt>FUNCTION <b>listCalendars</b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING</tt><dl>
-<dd><p> Returns a list of all calendars</p></dd>
+<dd><p> Returns a list of all calendars.</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
-<dd>a list of calendars + a non NULL error string in the error case<br>
+<dd>a list of calendars + a non NULL error string in case of error.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="modifyEventInteractively"> </a><h3>modifyEventInteractively</h3>
 <tt>FUNCTION <b>modifyEventInteractively</b>(event <a href="#eventT">eventT</a>) RETURNS STRING</tt><dl>
-<dd><p> modifies the given event in a native UI dialog</p></dd>
+<dd><p> Modifies the given event in a native UI dialog.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
 <code>event</code> - the event to modify<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog<br>
+<dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="modifyEventWithOptions"> </a><h3>modifyEventWithOptions</h3>
 <tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
-<dd><p> this function is implemented only on IOS and allows to modify an existing event</p></dd>
+<dd><p> This function is implemented only on IOS and allows to modify an existing event.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
 <code>findOptions</code> - if the find options contain a valid event id
- (returned by createEventWithOptions) the changes act on that event
- using NULL for the id uses the title,location etc to find the event<br><code>changeOptions</code> - contains the values to be override the old values in the event<br>
+ (returned by createEventWithOptions) the changes act on that event.
+ Using NULL for the id uses the title, location, etc. to find the event<br><code>changeOptions</code> - contains the values to override the old values in the event.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>the event Identifier if a change took place, NULL otherwise
- in the error case the error can be retrieved with getLastError()<br>
+<dd>the event Identifier if a change took place, NULL otherwise.
+ In case of error, the error can be retrieved with getLastError()<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="openCalendar"> </a><h3>openCalendar</h3>
 <tt>FUNCTION <b>openCalendar</b>(d <a href="#CALENDAR_DATE">CALENDAR_DATE</a>)</tt><dl>
-<dd><p> opens the calendar app on the device for a specific date</p></dd>
+<dd><p> Opens the calendar app on the device for a specific date.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>d</code> - The date the calendar app should display<br>
+<code>d</code> - The date to display in the calendar app.<br>
 </dd>
 </dl></dd>
 </dl>
