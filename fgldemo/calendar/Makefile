@@ -12,17 +12,19 @@
 
 BUNDLE_IDENTIFIER   = com.4js.cdvcalendar
 APPNAME             = CDVCalendar
-TARGET              = simulator
-TARGET              = phone
+DEVICE              = simulator
 MODE                = debug
 BUILD_FGL           = no
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
 
+PLUGIN=Calendar-PhoneGap-Plugin
+
 # in case you build the demo when having the plugin checked out of github 
 # then we use the fglcvdCalendar.42m in the fgl dir of the plugin
 ifneq ($(wildcard ../../fgl),)
 export FGLLDPATH    = ../../fgl
+PLUGIN= $(CURDIR)/../..
 endif
 
 MODULES  = $(patsubst %.4gl, %.42m, $(wildcard *.4gl))
@@ -37,23 +39,11 @@ FORMS    = $(patsubst %.per, %.42f, $(wildcard *.per))
 all:: $(MODULES) $(FORMS)
 
 
-#include the generic Makefile-gmi with a lot of targets
-ifndef GMIDIR
-GMIDIR=$(FGLDIR)
-endif
-MAKEFILE_GMI=$(shell GMIDIR="$(GMIDIR)";echo $${GMIDIR// /\\ })/lib/Makefile-gmi
--include $(MAKEFILE_GMI)
-
-# temporary workaround the transition from CDV prefixed plugin lib names to
-# github lib names
-
-USER_EXTENSION_LIBS=$(shell GMIDIR="$(GMIDIR)";echo $${GMIDIR// /\\ })/lib/cordova/CDVCalendar.a
-ifeq ($(wildcard $(USER_EXTENSION_LIBS)),)
-# new way
-  USER_EXTENSION_LIBS = -lCalendar-PhoneGap-plugin
-endif
+gmi.install: all
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 main.42m: calendars.42f events.42f newevent.42f
 
 clean::
-	rm -f *.sch *.dbs *.42*
+	rm -rf build
+	rm -f *.sch *.dbs *.42* gmi/Calendar.a gmi/link_flags.sh
