@@ -46,4 +46,4 @@ main.42m: calendars.42f events.42f newevent.42f
 
 clean::
 	rm -rf build
-	rm -f *.sch *.dbs *.42* gmi/Calendar.a gmi/link_flags.sh
+	rm -f *.42* gmi/*.a gmi/link_flags.sh
