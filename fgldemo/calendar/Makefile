@@ -40,7 +40,7 @@ all:: $(MODULES) $(FORMS)
 
 
 gmi.install: all
-	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --mode=$(MODE) --build-cordova=$(PLUGIN)
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=yes --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 main.42m: calendars.42f events.42f newevent.42f
 
