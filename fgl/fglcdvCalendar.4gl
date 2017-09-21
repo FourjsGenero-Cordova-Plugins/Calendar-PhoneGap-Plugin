@@ -419,7 +419,6 @@ FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOpti
   RETURN NULL
 END FUNCTION
 
-{
 FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -449,7 +448,6 @@ FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETUR
     RETURN NULL
   END TRY
 END FUNCTION
-}
 
 #+ Modifies the given event in a native UI dialog.
 #+ @param event the event to modify

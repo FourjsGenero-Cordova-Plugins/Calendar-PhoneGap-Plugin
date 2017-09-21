@@ -45,5 +45,5 @@ gmi.install: all
 main.42m: calendars.42f events.42f newevent.42f
 
 clean::
-	rm -rf build
-	rm -f *.42* gmi/*.a gmi/link_flags.sh
+	rm -rf build bin distbin
+	rm -f *.42* gmi/*.a gmi/link_flags.sh *.4pwvs *.4pwdb
