@@ -64,7 +64,16 @@
   <Group label="Packages" language="Genero">
     <Package binaryName="Cordova_iOS" dependencies="400358049,781919164,159917928,212784684,715422167,362164715,313644474" description="iOS Package" label="Cordova_iOS" platform="iOS Simulator">
       <DynamicProperty name="gmi-cordova" value="libCalendar-PhoneGap-Plugin"/>
-      <DynamicProperty name="packageId" value="com.company.myapp"/>
+      <DynamicProperty name="icon120x120" value="$(ProjectDir)/gmi/icon_40x40@3.png"/>
+      <DynamicProperty name="icon152x152" value="$(ProjectDir)/gmi/icon_76x76@2.png"/>
+      <DynamicProperty name="icon167x167" value="$(ProjectDir)/gmi/icon_167x167.png"/>
+      <DynamicProperty name="icon180x180" value="$(ProjectDir)/gmi/icon_60x60@3.png"/>
+      <DynamicProperty name="icon29x29" value="$(ProjectDir)/gmi/icon_29x29.png"/>
+      <DynamicProperty name="icon40x40" value="$(ProjectDir)/gmi/icon_40x40.png"/>
+      <DynamicProperty name="icon60x60" value="$(ProjectDir)/gmi/icon_60x60.png"/>
+      <DynamicProperty name="icon76x76" value="$(ProjectDir)/gmi/icon_76x76.png"/>
+      <DynamicProperty name="icon80x80" value="$(ProjectDir)/gmi/icon_40x40@2.png"/>
+      <DynamicProperty name="packageId" value="com.company.mycalendar"/>
       <DynamicProperty name="packageLabel" value="Calendar"/>
       <Directory description="Binaries" destinationDirectory="$(ProjectDir)/bin" excludedFiles="Test.42r" includedFiles="*.42?" label="Binaries" recursive="false" sourceDirectory="$(ProjectDir)/bin"/>
       <Directory description="Images" destinationDirectory="$(ProjectDir)/bin" includedFiles="*.png,*.jpg,*.ttf,image2font.txt" label="Images" sourceDirectory="$(ProjectDir)/images"/>

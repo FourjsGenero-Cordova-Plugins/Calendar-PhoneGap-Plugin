@@ -28,8 +28,6 @@ END RECORD
 &define ASSIGN_RECORD(src,dest) CALL util.JSON.parse(util.JSON.stringify(src),dest)
 
 MAIN
-    DEFINE result STRING
-    DEFINE cnt INT
     CALL fglcdvCalendar.init() --mandatory entry point
     --check the permissions once here to avoid to do that in several places
     DISPLAY "hasReadWrite:",fglcdvCalendar.hasReadWritePermission()
