@@ -14,7 +14,7 @@ BUNDLE_IDENTIFIER   = com.4js.cdvcalendar
 APPNAME             = CDVCalendar
 DEVICE              = simulator
 MODE                = debug
-BUILD_FGL           = no
+INSTALL             = yes
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
 
@@ -40,7 +40,7 @@ all:: $(MODULES) $(FORMS)
 
 
 gmi.install: all
-	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=yes --mode=$(MODE) --build-cordova=$(PLUGIN)
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=$(INSTALL) --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 main.42m: calendars.42f events.42f newevent.42f
 
