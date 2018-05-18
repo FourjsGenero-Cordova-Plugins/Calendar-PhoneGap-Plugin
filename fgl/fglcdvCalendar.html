@@ -26,25 +26,25 @@
 <b><a href="#CALENDAR_DATE">CALENDAR_DATE</a></b> DATETIME YEAR TO SECOND<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD R10<br>
+<b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD &lt;anonymous fglcdvCalendar R10&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
 <b><a href="#TIME_AS_NUMBER">TIME_AS_NUMBER</a></b> DECIMAL<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#attendeesT">attendeesT</a></b> RECORD R8<br>
+<b><a href="#attendeesT">attendeesT</a></b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#calendarT">calendarT</a></b> RECORD R4<br>
+<b><a href="#calendarT">calendarT</a></b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD R2<br>
+<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#eventT">eventT</a></b> RECORD R12<br>
+<b><a href="#eventT">eventT</a></b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
-<b><a href="#findOptionsT">findOptionsT</a></b> RECORD R6<br>
+<b><a href="#findOptionsT">findOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<br>
 </td></tr>
 </table>
 <br><a id="function_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
@@ -52,8 +52,7 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING) RETURNS STRING<br> Creates a new Calendar.
- (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</td>
+<b><a href="#createCalendar">createCalendar</a></b>(calendarName STRING, color STRING) RETURNS STRING<br> Creates a new Calendar.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -158,6 +157,12 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
+<b><a href="#modifyEventInteractivelyWithFindOptions">modifyEventInteractivelyWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING<br>
+</td>
+</tr>
+<tr>
+<td class="summary-text"></td>
+<td class="summary-text">
 <b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> This function is implemented only on IOS and allows to modify an existing event.</td>
 </tr>
 <tr>
@@ -190,7 +195,7 @@
 </dl>
 <hr>
 <a id="RecurrenceRuleT"> </a><h3>RecurrenceRuleT</h3>
-<tt>TYPE <b>RecurrenceRuleT</b> RECORD R10<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>RecurrenceRuleT</b> RECORD &lt;anonymous fglcdvCalendar R10&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>freq STRING</td></tr>
@@ -214,7 +219,7 @@
 </dl>
 <hr>
 <a id="attendeesT"> </a><h3>attendeesT</h3>
-<tt>TYPE <b>attendeesT</b> RECORD R8<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>attendeesT</b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>name STRING</td></tr>
@@ -229,7 +234,7 @@
 </dl>
 <hr>
 <a id="calendarT"> </a><h3>calendarT</h3>
-<tt>TYPE <b>calendarT</b> RECORD R4<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>calendarT</b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>id STRING</td></tr>
@@ -242,7 +247,7 @@
 </dl>
 <hr>
 <a id="eventOptionsT"> </a><h3>eventOptionsT</h3>
-<tt>TYPE <b>eventOptionsT</b> RECORD R2<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>eventOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -252,7 +257,7 @@
 </td></tr>
 <tr><td>endDate <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
 </td></tr>
-<tr><td>options RECORD R1
+<tr><td>options RECORD &lt;anonymous fglcdvCalendar R1&gt;
         <table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
@@ -277,7 +282,7 @@
 </dl>
 <hr>
 <a id="eventT"> </a><h3>eventT</h3>
-<tt>TYPE <b>eventT</b> RECORD R12<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>eventT</b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -306,7 +311,7 @@
 </dl>
 <hr>
 <a id="findOptionsT"> </a><h3>findOptionsT</h3>
-<tt>TYPE <b>findOptionsT</b> RECORD R6<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<tt>TYPE <b>findOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -327,8 +332,7 @@
 <h2>Functions</h2>
 <a id="createCalendar"> </a><h3>createCalendar</h3>
 <tt>FUNCTION <b>createCalendar</b>(calendarName STRING, color STRING) RETURNS STRING</tt><dl>
-<dd><p> Creates a new Calendar.
- (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )</p></dd>
+<dd><p> Creates a new Calendar.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -583,6 +587,17 @@
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.<br>
+</dd>
+</dl></dd>
+</dl>
+<hr>
+<a id="modifyEventInteractivelyWithFindOptions"> </a><h3>modifyEventInteractivelyWithFindOptions</h3>
+<tt>FUNCTION <b>modifyEventInteractivelyWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING</tt><dl>
+<dd></dd>
+<dd><dl>
+<dt><b>Parameters:</b></dt>
+<dd>
+<code>findOptions</code> - <br>
 </dd>
 </dl></dd>
 </dl>
