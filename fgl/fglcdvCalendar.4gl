@@ -335,7 +335,6 @@ END FUNCTION
 }
 
 #+ Creates a new Calendar.
-#+ (Android: no clue how the createEvent/findEvent/deleteEvent functions can act on this calendar )
 #+ @param calendarName name for the newly created calendar.
 #+ @param color a webbish RGB value such as '#ff0000' is required, or NULL
 #+ @return NULL on error, an id for the created calendar
