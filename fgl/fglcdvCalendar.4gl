@@ -174,8 +174,8 @@ END RECORD
 
 DEFINE m_error STRING --holds the error message from the last operation
 
-#+ Initializes the plugin
-#+ Must be called prior other calls
+#+ Initializes the fglcdvCalendar Cordova plugin library.
+#+ Must be called prior to other calls for the plugin library.
 PUBLIC FUNCTION init()
   DEFINE doc om.DomDocument
   DEFINE root,n,p om.DomNode
@@ -233,10 +233,13 @@ PRIVATE FUNCTION getCalendarOptions()
   RETURN opts.*
 END FUNCTION
 
-#+ Converts a 4GL date into the milliseconds since 1970 
-#+ (this is what a new Date.getTime() returns in JS)
-#+ @param d the Date to convert
-#+ @return the milliseconds since 01/01/1970
+#+ Converts a CALENDAR_DATE into the milliseconds since epoch (1970-01-01)
+#+
+#+ In JavaScript, getTime() of a new created Date returns a number of
+#+ milliseconds since 1970-01-01 as well.
+#+
+#+ @param d the CALENDAR_DATE to convert
+#+ @return the milliseconds since 1970-01-01
 PUBLIC FUNCTION dateTime2MilliSinceEpoch(d CALENDAR_DATE)
   IF d IS NULL THEN
     RETURN NULL
@@ -274,7 +277,7 @@ PRIVATE FUNCTION outer2Int(opts eventOptionsT)
    LET optionsInt.options.url=opts.options.url
 END FUNCTION
 
-#+ Creates a new Event
+#+ Creates a new calendar event with an option record.
 #+ @param options see eventOptionsT
 #+ @return an event id on success, NULL in case of error.
 #+ Use getLastError() to retrieve the error message
@@ -292,7 +295,7 @@ PUBLIC FUNCTION createEventWithOptions(options eventOptionsT) RETURNS STRING
     RETURN result
 END FUNCTION
 
-#+ Creates a new Event interactively with a native UI dialog
+#+ Creates a new event interactively with a native UI dialog.
 #+ @param options see eventOptionsT
 #+ @return an event id on success, NULL in case of error.
 #+ Use getLastError() to retrieve the error message.
@@ -336,7 +339,7 @@ END FUNCTION
 
 #+ Creates a new Calendar.
 #+ @param calendarName name for the newly created calendar.
-#+ @param color a webbish RGB value such as '#ff0000' is required, or NULL
+#+ @param color an RGB value in the style of '#ff0000' is required, or NULL.
 #+ @return NULL on error, an id for the created calendar
 FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
   DEFINE result STRING
@@ -355,7 +358,8 @@ FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
   RETURN result
 END FUNCTION
 
-#+ This function is implemented only on IOS and allows to modify an existing event.
+#+ This function modifies an existing event (iOS only).
+#+ Note that this function is not supported on Android.
 #+ @param findOptions if the find options contain a valid event id 
 #+ (returned by createEventWithOptions) the changes act on that event.
 #+ Using NULL for the id uses the title, location, etc. to find the event
@@ -418,6 +422,12 @@ FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOpti
   RETURN NULL
 END FUNCTION
 
+#+ This function modifies an existing event by using a native UI dialog, with find options to identify the event.
+#+ @param findOptions if the find options contain a valid event id 
+#+ (returned by createEventWithOptions) the changes act on that event.
+#+ Using NULL for the id uses the title, location, etc. to find the event
+#+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
+#+ In case of error, the error can be retrieved with getLastError()
 FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -508,7 +518,8 @@ FUNCTION listEventsInRange()
 END FUNCTION
 }
 
-#+ Deletes an event for a specific calendar : IOS only.
+#+ Deletes a set of events for a specific calendar (iOS only)
+#+ Note that this function is not supported on Android.
 #+ The given parameters are used to identify one or more events,
 #+ so for example events in a given time frame can be deleted.
 #+ @param findOptions same as for finding an event.
@@ -539,7 +550,7 @@ FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions findOptionsT,sp
   RETURN result
 END FUNCTION
 
-#+ Deletes an event for the active calendar.
+#+ Deletes a set of events for the active calendar.
 #+ The given parameters are used to identify one or more events,
 #+ so for example events in a given time frame can be deleted.
 #+ @param findOptions same as for finding an event
@@ -560,7 +571,8 @@ FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
   RETURN deleteEventWithFindOptions(findOpts.*,spanFutureEvents)
 END FUNCTION
 
-#+ Deletes an event for a specific calendar: IOS only .
+#+ Deletes an event for a specific calendar (iOS only).
+#+ Note that this function is not supported on Android.
 #+ @param event structure returned by findEvent.
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place.
@@ -581,8 +593,8 @@ FUNCTION getFindOptions() RETURNS findOptionsT
 END FUNCTION
 
 #+ Returns whether the given event is a recurring event.
-#+ @param event event returned by findEvents...
-#+ @return TRUE is recurring, FALSE if NOT recurring
+#+ @param event is an eventT returned by findEvents.
+#+ @return TRUE when event is recurring, FALSE if NOT recurring.
 FUNCTION isRecurring(event eventT) RETURNS BOOLEAN
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
