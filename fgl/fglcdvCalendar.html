@@ -18,8 +18,8 @@
 </tr></table>
 <br><small>Summary: <a href="#type_summary">TYPE</a> <a href="#function_summary">FUNCTION</a></small><hr>
 <b>fgl</b><h1>fglcdvCalendar</h1>
-<p> Genero 4GL wrapper around the Calendar plugin
- at https://github.com/FourjsGenero-Cordova-Plugins/Calendar-PhoneGap-Plugin</p>
+<p> Genero 4GL wrapper around the Calendar plugin</p>
+<p> at https://github.com/FourjsGenero-Cordova-Plugins/Calendar-PhoneGap-Plugin</p>
 <a id="type_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
 <tr><th class="summary" colspan="1">TYPE Summary</th></tr>
 <tr><td class="summary-text">
@@ -82,30 +82,22 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar (iOS only).
- Note that this function is not supported on Android.</td>
+<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar (iOS only).</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes a set of events for a specific calendar (iOS only)
- Note that this function is not supported on Android.
- The given parameters are used to identify one or more events,
- so for example events in a given time frame can be deleted.</td>
+<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes a set of events for a specific calendar (iOS only)</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes a set of events for the active calendar.
- The given parameters are used to identify one or more events,
- so for example events in a given time frame can be deleted.</td>
+<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes a set of events for the active calendar.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> Finds events either via id or by the combination of title...endTime.
- The calendarName option is only valid under IOS and only effective if
- id is not set.</td>
+<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> Finds calendar events based on search options.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -115,30 +107,27 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#getLastError">getLastError</a></b>() RETURNS STRING<br> gives back the last Error message of the previous operation </td>
+<b><a href="#getLastError">getLastError</a></b>() RETURNS STRING<br> Returns the last Error message of the previous operation </td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasReadPermission">hasReadPermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read from the Calendar
- On IOS this includes also the write permission</td>
+<b><a href="#hasReadPermission">hasReadPermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read from device's Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasReadWritePermission">hasReadWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read/write information from/to the Calendar</td>
+<b><a href="#hasReadWritePermission">hasReadWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to read/write information from/to device's Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#hasWritePermission">hasWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to write information to the Calendar
- On IOS this include also the read permission</td>
+<b><a href="#hasWritePermission">hasWritePermission</a></b>() RETURNS BOOLEAN<br> Checks if we are allowed to write information to device's Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#init">init</a></b>()<br> Initializes the fglcdvCalendar Cordova plugin library.
- Must be called prior to other calls for the plugin library.</td>
+<b><a href="#init">init</a></b>()<br> Initializes the fglcdvCalendar Cordova plugin library.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -163,8 +152,7 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> This function modifies an existing event (iOS only).
- Note that this function is not supported on Android.</td>
+<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> This function modifies an existing event (iOS only).</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -174,18 +162,17 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#requestReadPermission">requestReadPermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission
- On IOS this includes also the write permission</td>
+<b><a href="#requestReadPermission">requestReadPermission</a></b>() RETURNS BOOLEAN<br> Open a permission dialog to read from device's Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#requestReadWritePermission">requestReadWritePermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission</td>
+<b><a href="#requestReadWritePermission">requestReadWritePermission</a></b>() RETURNS BOOLEAN<br> Open a permission dialog to read from and write to device's Calendar</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#requestWritePermission">requestWritePermission</a></b>() RETURNS BOOLEAN<br> Explicitly show the permission dialog in case we have no permission</td>
+<b><a href="#requestWritePermission">requestWritePermission</a></b>() RETURNS BOOLEAN<br> Open a permission dialog to write to device's Calendar</td>
 </tr>
 </table>
 <br><h2>Types</h2>
@@ -347,34 +334,38 @@
 <hr>
 <a id="createEventInteractively"> </a><h3>createEventInteractively</h3>
 <tt>FUNCTION <b>createEventInteractively</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
-<dd><p> Creates a new event interactively with a native UI dialog.</p></dd>
+<dd>
+<p> Creates a new event interactively with a native UI dialog.</p>
+<p> Use getLastError() to retrieve the error message.
+ On iOS, the event id can be used to modify or delete the event.
+ On Android, the event id cannot be used for further operations.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
 <code>options</code> - see eventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>an event id on success, NULL in case of error.
- Use getLastError() to retrieve the error message.
- On IOS, the event id can be used to modify or delete the event.
- On Android, the event id cannot be used for further operations.<br>
+<dd>an event id on success, NULL in case of error.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="createEventWithOptions"> </a><h3>createEventWithOptions</h3>
 <tt>FUNCTION <b>createEventWithOptions</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
-<dd><p> Creates a new calendar event with an option record.</p></dd>
+<dd>
+<p> Creates a new calendar event with an option record.</p>
+<p> Use getLastError() to retrieve the error message
+ On iOS, the event id can be used to modify or delete the event.
+ On Android, the event id cannot be used for further operations.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
 <code>options</code> - see eventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>an event id on success, NULL in case of error.
- Use getLastError() to retrieve the error message
- On IOS, the event id can be used to modify or delete the event.
- On Android, the event id cannot be used for further operations.<br>
+<dd>an event id on success, NULL in case of error.<br>
 </dd>
 </dl></dd>
 </dl>
@@ -403,7 +394,7 @@
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>calendarName</code> - must not be NULL<br>
+<code>calendarName</code> - is the name of the calendar to be deleted<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>NULL on error , an ok string indicating the deletion was performed otherwise<br>
@@ -427,8 +418,10 @@
 <hr>
 <a id="deleteEventFromNamedCalendar"> </a><h3>deleteEventFromNamedCalendar</h3>
 <tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
-<dd><p> Deletes an event for a specific calendar (iOS only).
- Note that this function is not supported on Android.</p></dd>
+<dd>
+<p> Deletes an event for a specific calendar (iOS only).</p>
+<p> Note that this function is not supported on Android.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -442,10 +435,12 @@
 <hr>
 <a id="deleteEventFromNamedCalendarWithFindOptions"> </a><h3>deleteEventFromNamedCalendarWithFindOptions</h3>
 <tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
-<dd><p> Deletes a set of events for a specific calendar (iOS only)
- Note that this function is not supported on Android.
+<dd>
+<p> Deletes a set of events for a specific calendar (iOS only)</p>
+<p> Note that this function is not supported on Android.
  The given parameters are used to identify one or more events,
- so for example events in a given time frame can be deleted.</p></dd>
+ so for example events in a given time frame can be deleted.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -459,9 +454,11 @@
 <hr>
 <a id="deleteEventWithFindOptions"> </a><h3>deleteEventWithFindOptions</h3>
 <tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
-<dd><p> Deletes a set of events for the active calendar.
- The given parameters are used to identify one or more events,
- so for example events in a given time frame can be deleted.</p></dd>
+<dd>
+<p> Deletes a set of events for the active calendar.</p>
+<p> The given parameters are used to identify one or more events,
+ so for example events in a given time frame can be deleted.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -476,8 +473,10 @@
 <a id="findEventsWithOptions"> </a><h3>findEventsWithOptions</h3>
 <tt>FUNCTION <b>findEventsWithOptions</b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING</tt><dl>
 <dd>
-<p> Finds events either via id or by the combination of title...endTime.
- The calendarName option is only valid under IOS and only effective if
+<p> Finds calendar events based on search options.</p>
+<p> The function finds events either via id or by the combination of
+ title, startTime, endTime in the options structure.
+ The calendarName option is only valid under iOS and only effective if
  id is not set.</p>
 <p>
       <span><pre>   DEFINE options fglcdvCalendar.findOptionsT
@@ -512,7 +511,7 @@
 <hr>
 <a id="getLastError"> </a><h3>getLastError</h3>
 <tt>FUNCTION <b>getLastError</b>() RETURNS STRING</tt><dl>
-<dd><p> gives back the last Error message of the previous operation </p></dd>
+<dd><p> Returns the last Error message of the previous operation </p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>the error message<br>
@@ -522,8 +521,10 @@
 <hr>
 <a id="hasReadPermission"> </a><h3>hasReadPermission</h3>
 <tt>FUNCTION <b>hasReadPermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Checks if we are allowed to read from the Calendar
- On IOS this includes also the write permission</p></dd>
+<dd>
+<p> Checks if we are allowed to read from device's Calendar</p>
+<p> On iOS this includes also the write permission</p>
+</dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>
@@ -533,7 +534,7 @@
 <hr>
 <a id="hasReadWritePermission"> </a><h3>hasReadWritePermission</h3>
 <tt>FUNCTION <b>hasReadWritePermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Checks if we are allowed to read/write information from/to the Calendar</p></dd>
+<dd><p> Checks if we are allowed to read/write information from/to device's Calendar</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>
@@ -543,8 +544,10 @@
 <hr>
 <a id="hasWritePermission"> </a><h3>hasWritePermission</h3>
 <tt>FUNCTION <b>hasWritePermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Checks if we are allowed to write information to the Calendar
- On IOS this include also the read permission</p></dd>
+<dd>
+<p> Checks if we are allowed to write information to device's Calendar</p>
+<p> On iOS this includes also the read permission</p>
+</dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>
@@ -554,8 +557,10 @@
 <hr>
 <a id="init"> </a><h3>init</h3>
 <tt>FUNCTION <b>init</b>()</tt><dl>
-<dd><p> Initializes the fglcdvCalendar Cordova plugin library.
- Must be called prior to other calls for the plugin library.</p></dd>
+<dd>
+<p> Initializes the fglcdvCalendar Cordova plugin library.</p>
+<p> This function must be called prior to other calls for the plugin library.</p>
+</dd>
 <dd><dl></dl></dd>
 </dl>
 <hr>
@@ -599,35 +604,39 @@
 <hr>
 <a id="modifyEventInteractivelyWithFindOptions"> </a><h3>modifyEventInteractivelyWithFindOptions</h3>
 <tt>FUNCTION <b>modifyEventInteractivelyWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING</tt><dl>
-<dd><p> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</p></dd>
+<dd>
+<p> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</p>
+<p> In case of error, the error can be retrieved with getLastError()</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>findOptions</code> - if the find options contain a valid event id
+<code>findOptions</code> - if the find options contain a valid event id 
  (returned by createEventWithOptions) the changes act on that event.
  Using NULL for the id uses the title, location, etc. to find the event<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
- In case of error, the error can be retrieved with getLastError()<br>
+<dd>"Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.<br>
 </dd>
 </dl></dd>
 </dl>
 <hr>
 <a id="modifyEventWithOptions"> </a><h3>modifyEventWithOptions</h3>
 <tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
-<dd><p> This function modifies an existing event (iOS only).
- Note that this function is not supported on Android.</p></dd>
+<dd>
+<p> This function modifies an existing event (iOS only).</p>
+<p> Note that this function is not supported on Android.
+ In case of error, the error can be retrieved with getLastError()</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>findOptions</code> - if the find options contain a valid event id
+<code>findOptions</code> - if the find options contain a valid event id 
  (returned by createEventWithOptions) the changes act on that event.
  Using NULL for the id uses the title, location, etc. to find the event<br><code>changeOptions</code> - contains the values to override the old values in the event.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>the event Identifier if a change took place, NULL otherwise.
- In case of error, the error can be retrieved with getLastError()<br>
+<dd>the event Identifier if a change took place, NULL otherwise.<br>
 </dd>
 </dl></dd>
 </dl>
@@ -645,8 +654,10 @@
 <hr>
 <a id="requestReadPermission"> </a><h3>requestReadPermission</h3>
 <tt>FUNCTION <b>requestReadPermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Explicitly show the permission dialog in case we have no permission
- On IOS this includes also the write permission</p></dd>
+<dd>
+<p> Open a permission dialog to read from device's Calendar</p>
+<p> On iOS this includes also the write permission</p>
+</dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>
@@ -656,7 +667,7 @@
 <hr>
 <a id="requestReadWritePermission"> </a><h3>requestReadWritePermission</h3>
 <tt>FUNCTION <b>requestReadWritePermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Explicitly show the permission dialog in case we have no permission</p></dd>
+<dd><p> Open a permission dialog to read from and write to device's Calendar</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>
@@ -666,7 +677,10 @@
 <hr>
 <a id="requestWritePermission"> </a><h3>requestWritePermission</h3>
 <tt>FUNCTION <b>requestWritePermission</b>() RETURNS BOOLEAN</tt><dl>
-<dd><p> Explicitly show the permission dialog in case we have no permission</p></dd>
+<dd>
+<p> Open a permission dialog to write to device's Calendar</p>
+<p> On iOS this includes also the read permission</p>
+</dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
 <dd>TRUE upon success, FALSE otherwise<br>

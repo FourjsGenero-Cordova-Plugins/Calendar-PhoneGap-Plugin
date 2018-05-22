@@ -7,6 +7,7 @@
 #       https://www.apache.org/licenses/LICENSE-2.0
 
 #+ Genero 4GL wrapper around the Calendar plugin
+#+
 #+ at https://github.com/FourjsGenero-Cordova-Plugins/Calendar-PhoneGap-Plugin
 OPTIONS SHORT CIRCUIT
 IMPORT util
@@ -109,7 +110,7 @@ TYPE eventTypeInternal RECORD --return type for find function
         type STRING,
         role STRING
     END RECORD,
-    rrule RECORD --IOS 
+    rrule RECORD --iOS 
         freq STRING, 
         interval INT,
         until RECORD
@@ -175,7 +176,8 @@ END RECORD
 DEFINE m_error STRING --holds the error message from the last operation
 
 #+ Initializes the fglcdvCalendar Cordova plugin library.
-#+ Must be called prior to other calls for the plugin library.
+#+
+#+ This function must be called prior to other calls for the plugin library.
 PUBLIC FUNCTION init()
   DEFINE doc om.DomDocument
   DEFINE root,n,p om.DomNode
@@ -183,7 +185,7 @@ PUBLIC FUNCTION init()
 #+ GMI: If the plugin is initialized in the very first instructions
 #+ of the mobile program, the delaying mechanism for the splash screen
 #+ may block the whole startup (because the plugin initialization blocks the main thread), 
-#+ so we create a temporary menu to let the IOS event loop kick in.
+#+ so we create a temporary menu to let the iOS event loop kick in.
   IF ui.Interface.getFrontEndName()=="GMI" OR ui.Interface.getFrontEndName()=="GMA" THEN
     LET doc=ui.Interface.getDocument()
     LET root=doc.getDocumentElement()
@@ -216,7 +218,7 @@ PRIVATE FUNCTION err_frontcall()
     LET msg=msg.subString(msg.getIndexOf("Reason:",1)+7,msg.getLength())
   END IF
   IF (idx:=msg.getIndexOf("NSLocalizedDescription = ",1))<>0 THEN
-    --extract from the silly IOS format
+    --extract from the silly iOS format
     LET idx=idx+26
     LET endidx=msg.getIndexOf("\n",idx)
     IF endidx<>0 THEN
@@ -278,11 +280,13 @@ PRIVATE FUNCTION outer2Int(opts eventOptionsT)
 END FUNCTION
 
 #+ Creates a new calendar event with an option record.
+#+
+#+ Use getLastError() to retrieve the error message
+#+ On iOS, the event id can be used to modify or delete the event.
+#+ On Android, the event id cannot be used for further operations.
+#+
 #+ @param options see eventOptionsT
 #+ @return an event id on success, NULL in case of error.
-#+ Use getLastError() to retrieve the error message
-#+ On IOS, the event id can be used to modify or delete the event.
-#+ On Android, the event id cannot be used for further operations.
 PUBLIC FUNCTION createEventWithOptions(options eventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
@@ -296,11 +300,13 @@ PUBLIC FUNCTION createEventWithOptions(options eventOptionsT) RETURNS STRING
 END FUNCTION
 
 #+ Creates a new event interactively with a native UI dialog.
+#+
+#+ Use getLastError() to retrieve the error message.
+#+ On iOS, the event id can be used to modify or delete the event.
+#+ On Android, the event id cannot be used for further operations.
+#+
 #+ @param options see eventOptionsT
 #+ @return an event id on success, NULL in case of error.
-#+ Use getLastError() to retrieve the error message.
-#+ On IOS, the event id can be used to modify or delete the event.
-#+ On Android, the event id cannot be used for further operations.
 PUBLIC FUNCTION createEventInteractively(options eventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
@@ -315,8 +321,11 @@ END FUNCTION
 
 {
 #+ Return all events for a given calendar.
+#+
 #+ Convenient for quickly looking inside a calendar.
-#+ IOS only, on Android the call fails. Therefore for production, use only findEventsWithOptions().
+#+ iOS only, on Android the call fails.
+#+ For production, use only findEventsWithOptions().
+#+
 #+ @param calendarName must not be NULL.
 #+ @return all events and an error string in case the operation failed.
 PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING) 
@@ -338,6 +347,7 @@ END FUNCTION
 }
 
 #+ Creates a new Calendar.
+#+
 #+ @param calendarName name for the newly created calendar.
 #+ @param color an RGB value in the style of '#ff0000' is required, or NULL.
 #+ @return NULL on error, an id for the created calendar
@@ -359,13 +369,15 @@ FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
 END FUNCTION
 
 #+ This function modifies an existing event (iOS only).
+#+
 #+ Note that this function is not supported on Android.
+#+ In case of error, the error can be retrieved with getLastError()
+#+
 #+ @param findOptions if the find options contain a valid event id 
 #+ (returned by createEventWithOptions) the changes act on that event.
 #+ Using NULL for the id uses the title, location, etc. to find the event
 #+ @param changeOptions contains the values to override the old values in the event. 
 #+ @return the event Identifier if a change took place, NULL otherwise.
-#+ In case of error, the error can be retrieved with getLastError()
 FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -423,11 +435,13 @@ FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOpti
 END FUNCTION
 
 #+ This function modifies an existing event by using a native UI dialog, with find options to identify the event.
+#+
+#+ In case of error, the error can be retrieved with getLastError()
+#+
 #+ @param findOptions if the find options contain a valid event id 
 #+ (returned by createEventWithOptions) the changes act on that event.
 #+ Using NULL for the id uses the title, location, etc. to find the event
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
-#+ In case of error, the error can be retrieved with getLastError()
 FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -459,6 +473,7 @@ FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETUR
 END FUNCTION
 
 #+ Modifies the given event in a native UI dialog.
+#+
 #+ @param event the event to modify
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
 FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
@@ -470,6 +485,7 @@ FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
 END FUNCTION
 
 #+ Opens the calendar app on the device for a specific date.
+#+
 #+ @param d The date to display in the calendar app.
 FUNCTION openCalendar(d CALENDAR_DATE)
   DEFINE options RECORD
@@ -481,6 +497,7 @@ FUNCTION openCalendar(d CALENDAR_DATE)
 END FUNCTION
 
 #+ Returns a list of all calendars.
+#+
 #+ @return a list of calendars + a non NULL error string in case of error.
 FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
   DEFINE internal DYNAMIC ARRAY OF RECORD
@@ -495,7 +512,7 @@ FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"listCalendars"],[internal])
-    --IOS returns name, Android displayName (for whatever reason...)
+    --iOS returns name, Android displayName (for whatever reason...)
     FOR i=1 TO internal.getLength()
       LET result[i].id=internal[i].id
       LET result[i].name=IIF(internal[i].name IS NOT NULL,internal[i].name,
@@ -510,7 +527,7 @@ FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
 END FUNCTION
 
 {
-#+ Does nothing on IOS, needs to be checked on Android.
+#+ Does nothing on iOS, needs to be checked on Android.
 FUNCTION listEventsInRange()
   DEFINE result STRING
   CALL ui.Interface.frontCall(CORDOVA,_CALL,
@@ -519,9 +536,11 @@ END FUNCTION
 }
 
 #+ Deletes a set of events for a specific calendar (iOS only)
+#+
 #+ Note that this function is not supported on Android.
 #+ The given parameters are used to identify one or more events,
 #+ so for example events in a given time frame can be deleted.
+#+
 #+ @param findOptions same as for finding an event.
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place
@@ -551,8 +570,10 @@ FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions findOptionsT,sp
 END FUNCTION
 
 #+ Deletes a set of events for the active calendar.
+#+
 #+ The given parameters are used to identify one or more events,
 #+ so for example events in a given time frame can be deleted.
+#+
 #+ @param findOptions same as for finding an event
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in the error case, an non NULL string if the deletion was successful. Use getLastError() to get the error reason
@@ -561,6 +582,7 @@ FUNCTION deleteEventWithFindOptions(findOptions findOptionsT,spanFutureEvents BO
 END FUNCTION
 
 #+ Deletes an event for the active calendar.
+#+
 #+ @param event structure returned by findEvent
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
@@ -572,7 +594,9 @@ FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
 END FUNCTION
 
 #+ Deletes an event for a specific calendar (iOS only).
+#+
 #+ Note that this function is not supported on Android.
+#+
 #+ @param event structure returned by findEvent.
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place.
@@ -585,6 +609,7 @@ FUNCTION deleteEventFromNamedCalendar(event eventT,spanFutureEvents BOOLEAN,cale
 END FUNCTION
 
 #+ Helper function for findEventsWithOptions
+#+
 #+ @return an initialized findOptionsT RECORD
 FUNCTION getFindOptions() RETURNS findOptionsT
   DEFINE fo findOptionsT
@@ -593,15 +618,20 @@ FUNCTION getFindOptions() RETURNS findOptionsT
 END FUNCTION
 
 #+ Returns whether the given event is a recurring event.
+#+
 #+ @param event is an eventT returned by findEvents.
 #+ @return TRUE when event is recurring, FALSE if NOT recurring.
 FUNCTION isRecurring(event eventT) RETURNS BOOLEAN
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
 
-#+ Finds events either via id or by the combination of title...endTime.
-#+ The calendarName option is only valid under IOS and only effective if 
+#+ Finds calendar events based on search options.
+#+
+#+ The function finds events either via id or by the combination of
+#+ title, startTime, endTime in the options structure.
+#+ The calendarName option is only valid under iOS and only effective if 
 #+ id is not set.
+#+
 #+ @param options see findOptionsT
 #+ @return an array of events (can be empty) + an NOT NULL error string in the error case
 #+
@@ -676,7 +706,7 @@ FUNCTION findEventsWithOptions(options findOptionsT) RETURNS (DYNAMIC ARRAY OF e
       IF ev.rrule.until.count>0 THEN
         LET results[i].rrule.count=ev.rrule.until.count
       END IF
-      --wkst,byday,bymonthday are not set on IOS
+      --wkst,byday,bymonthday are not set on iOS
     WHEN ev.recurrence.freq IS NOT NULL AND ui.Interface.getFrontEndName()=="GMA"
       LET results[i].rrule.freq=DOWNSHIFT(ev.recurrence.freq)
       LET results[i].rrule.wkst=ev.recurrence.wkst
@@ -695,7 +725,8 @@ FUNCTION findEventsWithOptions(options findOptionsT) RETURNS (DYNAMIC ARRAY OF e
 END FUNCTION
 
 #+ Deletes the given calendar
-#+ @param calendarName must not be NULL
+#+
+#+ @param calendarName is the name of the calendar to be deleted
 #+ @return NULL on error , an ok string indicating the deletion was performed otherwise
 FUNCTION deleteCalendar(calendarName STRING) RETURNS STRING
   DEFINE result STRING
@@ -713,9 +744,10 @@ FUNCTION deleteCalendar(calendarName STRING) RETURNS STRING
   RETURN result
 END FUNCTION
 
-
-#+ Checks if we are allowed to read from the Calendar
-#+ On IOS this includes also the write permission
+#+ Checks if we are allowed to read from device's Calendar
+#+
+#+ On iOS this includes also the write permission
+#+
 #+ @return TRUE upon success, FALSE otherwise
 FUNCTION hasReadPermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
@@ -727,22 +759,10 @@ FUNCTION hasReadPermission() RETURNS BOOLEAN
   RETURN FALSE
 END FUNCTION
 
-
-#+ Explicitly show the permission dialog in case we have no permission
-#+ On IOS this includes also the write permission
-#+ @return TRUE upon success, FALSE otherwise
-FUNCTION requestReadPermission() RETURNS BOOLEAN
-  DEFINE result BOOLEAN
-  TRY
-    CALL ui.Interface.frontCall(CORDOVA,_CALL,
-                             [CALENDAR,"requestReadPermission"],[result])
-    RETURN result
-  END TRY
-  RETURN FALSE
-END FUNCTION
-
-#+ Checks if we are allowed to write information to the Calendar
-#+ On IOS this include also the read permission
+#+ Checks if we are allowed to write information to device's Calendar
+#+
+#+ On iOS this includes also the read permission
+#+
 #+ @return TRUE upon success, FALSE otherwise
 FUNCTION hasWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
@@ -754,7 +774,8 @@ FUNCTION hasWritePermission() RETURNS BOOLEAN
   RETURN FALSE
 END FUNCTION
 
-#+ Checks if we are allowed to read/write information from/to the Calendar
+#+ Checks if we are allowed to read/write information from/to device's Calendar
+#+
 #+ @return TRUE upon success, FALSE otherwise
 FUNCTION hasReadWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
@@ -766,7 +787,25 @@ FUNCTION hasReadWritePermission() RETURNS BOOLEAN
   RETURN FALSE
 END FUNCTION
 
-#+ Explicitly show the permission dialog in case we have no permission
+#+ Open a permission dialog to read from device's Calendar
+#+
+#+ On iOS this includes also the write permission
+#+
+#+ @return TRUE upon success, FALSE otherwise
+FUNCTION requestReadPermission() RETURNS BOOLEAN
+  DEFINE result BOOLEAN
+  TRY
+    CALL ui.Interface.frontCall(CORDOVA,_CALL,
+                             [CALENDAR,"requestReadPermission"],[result])
+    RETURN result
+  END TRY
+  RETURN FALSE
+END FUNCTION
+
+#+ Open a permission dialog to write to device's Calendar
+#+
+#+ On iOS this includes also the read permission
+#+
 #+ @return TRUE upon success, FALSE otherwise
 FUNCTION requestWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
@@ -778,7 +817,8 @@ FUNCTION requestWritePermission() RETURNS BOOLEAN
   RETURN FALSE
 END FUNCTION
 
-#+ Explicitly show the permission dialog in case we have no permission
+#+ Open a permission dialog to read from and write to device's Calendar
+#+
 #+ @return TRUE upon success, FALSE otherwise
 FUNCTION requestReadWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
@@ -790,7 +830,8 @@ FUNCTION requestReadWritePermission() RETURNS BOOLEAN
   RETURN FALSE
 END FUNCTION
 
-#+ gives back the last Error message of the previous operation 
+#+ Returns the last Error message of the previous operation 
+#+
 #+ @return the error message
 FUNCTION getLastError() RETURNS STRING
   RETURN m_error
