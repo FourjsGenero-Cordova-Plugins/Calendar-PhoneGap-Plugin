@@ -1,5 +1,5 @@
 # PhoneGap Calendar plugin
-# This fork is providing Genero 4GL specific additions, see [here](fgl/README.md).
+# This fork is providing Genero BDL specific additions, see [here](fgl/README.md).
 
 for iOS and Android, by [Eddy Verbruggen](http://www.x-services.nl)
 

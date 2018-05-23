@@ -6,7 +6,7 @@
 #
 #       https://www.apache.org/licenses/LICENSE-2.0
 
-#+ Genero 4GL wrapper around the Calendar plugin
+#+ Genero BDL wrapper around the Calendar plugin
 #+
 #+ at https://github.com/FourjsGenero-Cordova-Plugins/Calendar-PhoneGap-Plugin
 OPTIONS SHORT CIRCUIT
@@ -131,7 +131,7 @@ END RECORD
 
 --Private types and variables
 --The plugin requires in several places startTime and endTime as
---milliseconds since 1970. We expose those as startDate and endDate to the 4GL side
+--milliseconds since 1970. We expose those as startDate and endDate to the BDL side
 --Furthermore, the iOS plugin is very picky about getting NULL values
 --as explicit null JSON literals, otherwise crashes might occur.
 
@@ -249,9 +249,9 @@ PUBLIC FUNCTION dateTime2MilliSinceEpoch(d CALENDAR_DATE)
   RETURN util.Datetime.toSecondsSinceEpoch(d)*1000
 END FUNCTION
 
-&define DATETIME2JS(opJS,op4GL) \
-  LET opJS.startTime=dateTime2MilliSinceEpoch(op4GL.startDate)  \
-  LET opJS.endTime=dateTime2MilliSinceEpoch(op4GL.endDate) 
+&define DATETIME2JS(opJS,opFGL) \
+  LET opJS.startTime=dateTime2MilliSinceEpoch(opFGL.startDate)  \
+  LET opJS.endTime=dateTime2MilliSinceEpoch(opFGL.endDate)
 
 PRIVATE FUNCTION outer2Int(opts eventOptionsT)
    DEFINE d0,d1 DATE
