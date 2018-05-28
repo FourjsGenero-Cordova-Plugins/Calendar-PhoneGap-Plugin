@@ -370,14 +370,16 @@ END FUNCTION
 
 #+ This function modifies an existing event (iOS only).
 #+
-#+ Note that this function is not supported on Android.
+#+ This function is only supported on GMI/iOS.
+#+
 #+ In case of error, the error can be retrieved with getLastError()
 #+
 #+ @param findOptions if the find options contain a valid event id 
 #+ (returned by createEventWithOptions) the changes act on that event.
 #+ Using NULL for the id uses the title, location, etc. to find the event
 #+ @param changeOptions contains the values to override the old values in the event. 
-#+ @return the event Identifier if a change took place, NULL otherwise.
+#+
+#+ @return the event Identifier if a change took place, NULL in case of error.
 FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
@@ -436,11 +438,14 @@ END FUNCTION
 
 #+ This function modifies an existing event by using a native UI dialog, with find options to identify the event.
 #+
+#+ This function is only supported on GMI/iOS.
+#+
 #+ In case of error, the error can be retrieved with getLastError()
 #+
 #+ @param findOptions if the find options contain a valid event id 
 #+ (returned by createEventWithOptions) the changes act on that event.
 #+ Using NULL for the id uses the title, location, etc. to find the event
+#+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
 FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETURNS STRING
   DEFINE result STRING
@@ -474,7 +479,10 @@ END FUNCTION
 
 #+ Modifies the given event in a native UI dialog.
 #+
+#+ This function is only supported on GMI/iOS.
+#+
 #+ @param event the event to modify
+#+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
 FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
   DEFINE findOpts findOptionsT

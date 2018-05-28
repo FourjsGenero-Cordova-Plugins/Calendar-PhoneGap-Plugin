@@ -590,7 +590,10 @@
 <hr>
 <a id="modifyEventInteractively"> </a><h3>modifyEventInteractively</h3>
 <tt>FUNCTION <b>modifyEventInteractively</b>(event <a href="#eventT">eventT</a>) RETURNS STRING</tt><dl>
-<dd><p> Modifies the given event in a native UI dialog.</p></dd>
+<dd>
+<p> Modifies the given event in a native UI dialog.</p>
+<p> This function is only supported on GMI/iOS.</p>
+</dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
@@ -606,6 +609,7 @@
 <tt>FUNCTION <b>modifyEventInteractivelyWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</p>
+<p> This function is only supported on GMI/iOS.</p>
 <p> In case of error, the error can be retrieved with getLastError()</p>
 </dd>
 <dd><dl>
@@ -625,8 +629,8 @@
 <tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> This function modifies an existing event (iOS only).</p>
-<p> Note that this function is not supported on Android.
- In case of error, the error can be retrieved with getLastError()</p>
+<p> This function is only supported on GMI/iOS.</p>
+<p> In case of error, the error can be retrieved with getLastError()</p>
 </dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -636,7 +640,7 @@
  Using NULL for the id uses the title, location, etc. to find the event<br><code>changeOptions</code> - contains the values to override the old values in the event.<br>
 </dd>
 <dt><b>Returns:</b></dt>
-<dd>the event Identifier if a change took place, NULL otherwise.<br>
+<dd>the event Identifier if a change took place, NULL in case of error.<br>
 </dd>
 </dl></dd>
 </dl>
