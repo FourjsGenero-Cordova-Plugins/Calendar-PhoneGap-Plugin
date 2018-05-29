@@ -23,28 +23,28 @@
 <a id="type_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
 <tr><th class="summary" colspan="1">TYPE Summary</th></tr>
 <tr><td class="summary-text">
+<b><a href="#AttendeesT">AttendeesT</a></b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<br>
+</td></tr>
+<tr><td class="summary-text">
 <b><a href="#CALENDAR_DATE">CALENDAR_DATE</a></b> DATETIME YEAR TO SECOND<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#CalendarT">CalendarT</a></b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#EventOptionsT">EventOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#EventT">EventT</a></b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<br>
+</td></tr>
+<tr><td class="summary-text">
+<b><a href="#FindOptionsT">FindOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
 <b><a href="#RecurrenceRuleT">RecurrenceRuleT</a></b> RECORD &lt;anonymous fglcdvCalendar R10&gt;<br>
 </td></tr>
 <tr><td class="summary-text">
 <b><a href="#TIME_AS_NUMBER">TIME_AS_NUMBER</a></b> DECIMAL<br>
-</td></tr>
-<tr><td class="summary-text">
-<b><a href="#attendeesT">attendeesT</a></b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<br>
-</td></tr>
-<tr><td class="summary-text">
-<b><a href="#calendarT">calendarT</a></b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<br>
-</td></tr>
-<tr><td class="summary-text">
-<b><a href="#eventOptionsT">eventOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<br>
-</td></tr>
-<tr><td class="summary-text">
-<b><a href="#eventT">eventT</a></b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<br>
-</td></tr>
-<tr><td class="summary-text">
-<b><a href="#findOptionsT">findOptionsT</a></b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<br>
 </td></tr>
 </table>
 <br><a id="function_summary"></a><table border="1" width="100%" cellpadding="3" cellspacing="0" class="summary">
@@ -57,12 +57,12 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createEventInteractively">createEventInteractively</a></b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> Creates a new event interactively with a native UI dialog.</td>
+<b><a href="#createEventInteractively">createEventInteractively</a></b>(options <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING<br> Creates a new event interactively with a native UI dialog.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#createEventWithOptions">createEventWithOptions</a></b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> Creates a new calendar event with an option record.</td>
+<b><a href="#createEventWithOptions">createEventWithOptions</a></b>(options <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING<br> Creates a new calendar event with an option record.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -77,32 +77,32 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEvent">deleteEvent</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar.</td>
+<b><a href="#deleteEvent">deleteEvent</a></b>(event <a href="#EventT">EventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes an event for the active calendar.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar (iOS only).</td>
+<b><a href="#deleteEventFromNamedCalendar">deleteEventFromNamedCalendar</a></b>(event <a href="#EventT">EventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes an event for a specific calendar (iOS only).</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes a set of events for a specific calendar (iOS only)</td>
+<b><a href="#deleteEventFromNamedCalendarWithFindOptions">deleteEventFromNamedCalendarWithFindOptions</a></b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING<br> Deletes a set of events for a specific calendar (iOS only)</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes a set of events for the active calendar.</td>
+<b><a href="#deleteEventWithFindOptions">deleteEventWithFindOptions</a></b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING<br> Deletes a set of events for the active calendar.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING<br> Finds calendar events based on search options.</td>
+<b><a href="#findEventsWithOptions">findEventsWithOptions</a></b>(options <a href="#FindOptionsT">FindOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#EventT">EventT</a>, STRING<br> Finds calendar events based on search options.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#getFindOptions">getFindOptions</a></b>() RETURNS <a href="#findOptionsT">findOptionsT</a><br> Helper function for findEventsWithOptions</td>
+<b><a href="#getFindOptions">getFindOptions</a></b>() RETURNS <a href="#FindOptionsT">FindOptionsT</a><br> Helper function for findEventsWithOptions</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -132,27 +132,27 @@
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#isRecurring">isRecurring</a></b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN<br> Returns whether the given event is a recurring event.</td>
+<b><a href="#isRecurring">isRecurring</a></b>(event <a href="#EventT">EventT</a>) RETURNS BOOLEAN<br> Returns whether the given event is a recurring event.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#listCalendars">listCalendars</a></b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING<br> Returns a list of all calendars.</td>
+<b><a href="#listCalendars">listCalendars</a></b>() RETURNS DYNAMIC ARRAY OF  <a href="#CalendarT">CalendarT</a>, STRING<br> Returns a list of all calendars.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event <a href="#eventT">eventT</a>) RETURNS STRING<br> Modifies the given event in a native UI dialog.</td>
+<b><a href="#modifyEventInteractively">modifyEventInteractively</a></b>(event <a href="#EventT">EventT</a>) RETURNS STRING<br> Modifies the given event in a native UI dialog.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventInteractivelyWithFindOptions">modifyEventInteractivelyWithFindOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING<br> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</td>
+<b><a href="#modifyEventInteractivelyWithFindOptions">modifyEventInteractivelyWithFindOptions</a></b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>) RETURNS STRING<br> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
 <td class="summary-text">
-<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING<br> This function modifies an existing event (iOS only).</td>
+<b><a href="#modifyEventWithOptions">modifyEventWithOptions</a></b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, changeOptions <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING<br> This function modifies an existing event (iOS only).</td>
 </tr>
 <tr>
 <td class="summary-text"></td>
@@ -176,38 +176,8 @@
 </tr>
 </table>
 <br><h2>Types</h2>
-<a id="CALENDAR_DATE"> </a><h3>CALENDAR_DATE</h3>
-<tt>TYPE <b>CALENDAR_DATE</b> DATETIME YEAR TO SECOND</tt><dl>
-<dd></dd>
-<dd><dl></dl></dd>
-</dl>
-<hr>
-<a id="RecurrenceRuleT"> </a><h3>RecurrenceRuleT</h3>
-<tt>TYPE <b>RecurrenceRuleT</b> RECORD &lt;anonymous fglcdvCalendar R10&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
-<td>    </td>
-<td><table border="0" cellpadding="0" cellspacing="0" class="member">
-<tr><td>freq STRING</td></tr>
-<tr><td>interval INTEGER</td></tr>
-<tr><td>wkst STRING</td></tr>
-<tr><td>byday STRING</td></tr>
-<tr><td>bymonthday STRING</td></tr>
-<tr><td>until <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
-</td></tr>
-<tr><td>count INTEGER</td></tr>
-</table></td>
-</tr></table> END RECORD</tt><dl>
-<dd></dd>
-<dd><dl></dl></dd>
-</dl>
-<hr>
-<a id="TIME_AS_NUMBER"> </a><h3>TIME_AS_NUMBER</h3>
-<tt>TYPE <b>TIME_AS_NUMBER</b> DECIMAL</tt><dl>
-<dd></dd>
-<dd><dl></dl></dd>
-</dl>
-<hr>
-<a id="attendeesT"> </a><h3>attendeesT</h3>
-<tt>TYPE <b>attendeesT</b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<a id="AttendeesT"> </a><h3>AttendeesT</h3>
+<tt>TYPE <b>AttendeesT</b> RECORD &lt;anonymous fglcdvCalendar R8&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>name STRING</td></tr>
@@ -221,8 +191,14 @@
 <dd><dl></dl></dd>
 </dl>
 <hr>
-<a id="calendarT"> </a><h3>calendarT</h3>
-<tt>TYPE <b>calendarT</b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<a id="CALENDAR_DATE"> </a><h3>CALENDAR_DATE</h3>
+<tt>TYPE <b>CALENDAR_DATE</b> DATETIME YEAR TO SECOND</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="CalendarT"> </a><h3>CalendarT</h3>
+<tt>TYPE <b>CalendarT</b> RECORD &lt;anonymous fglcdvCalendar R4&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>id STRING</td></tr>
@@ -234,8 +210,8 @@
 <dd><dl></dl></dd>
 </dl>
 <hr>
-<a id="eventOptionsT"> </a><h3>eventOptionsT</h3>
-<tt>TYPE <b>eventOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<a id="EventOptionsT"> </a><h3>EventOptionsT</h3>
+<tt>TYPE <b>EventOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R2&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -269,8 +245,8 @@
 <dd><dl></dl></dd>
 </dl>
 <hr>
-<a id="eventT"> </a><h3>eventT</h3>
-<tt>TYPE <b>eventT</b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<a id="EventT"> </a><h3>EventT</h3>
+<tt>TYPE <b>EventT</b> RECORD &lt;anonymous fglcdvCalendar R12&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -288,7 +264,7 @@
 <tr><td>url STRING</td></tr>
 <tr><td>notes STRING</td></tr>
 <tr><td>allday BOOLEAN</td></tr>
-<tr><td>attendees DYNAMIC ARRAY OF  <a href="#attendeesT">attendeesT</a>
+<tr><td>attendees DYNAMIC ARRAY OF  <a href="#AttendeesT">AttendeesT</a>
 </td></tr>
 <tr><td>rrule <a href="#RecurrenceRuleT">RecurrenceRuleT</a>
 </td></tr>
@@ -298,8 +274,8 @@
 <dd><dl></dl></dd>
 </dl>
 <hr>
-<a id="findOptionsT"> </a><h3>findOptionsT</h3>
-<tt>TYPE <b>findOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<a id="FindOptionsT"> </a><h3>FindOptionsT</h3>
+<tt>TYPE <b>FindOptionsT</b> RECORD &lt;anonymous fglcdvCalendar R6&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
 <td>    </td>
 <td><table border="0" cellpadding="0" cellspacing="0" class="member">
 <tr><td>title STRING</td></tr>
@@ -313,6 +289,30 @@
 <tr><td>calendarName STRING</td></tr>
 </table></td>
 </tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="RecurrenceRuleT"> </a><h3>RecurrenceRuleT</h3>
+<tt>TYPE <b>RecurrenceRuleT</b> RECORD &lt;anonymous fglcdvCalendar R10&gt;<table border="0" cellpadding="0" cellspacing="0" class="member"><tr>
+<td>    </td>
+<td><table border="0" cellpadding="0" cellspacing="0" class="member">
+<tr><td>freq STRING</td></tr>
+<tr><td>interval INTEGER</td></tr>
+<tr><td>wkst STRING</td></tr>
+<tr><td>byday STRING</td></tr>
+<tr><td>bymonthday STRING</td></tr>
+<tr><td>until <a href="#CALENDAR_DATE">CALENDAR_DATE</a>
+</td></tr>
+<tr><td>count INTEGER</td></tr>
+</table></td>
+</tr></table> END RECORD</tt><dl>
+<dd></dd>
+<dd><dl></dl></dd>
+</dl>
+<hr>
+<a id="TIME_AS_NUMBER"> </a><h3>TIME_AS_NUMBER</h3>
+<tt>TYPE <b>TIME_AS_NUMBER</b> DECIMAL</tt><dl>
 <dd></dd>
 <dd><dl></dl></dd>
 </dl>
@@ -333,7 +333,7 @@
 </dl>
 <hr>
 <a id="createEventInteractively"> </a><h3>createEventInteractively</h3>
-<tt>FUNCTION <b>createEventInteractively</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>createEventInteractively</b>(options <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> Creates a new event interactively with a native UI dialog.</p>
 <p> Use getLastError() to retrieve the error message.
@@ -343,7 +343,7 @@
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>options</code> - see eventOptionsT<br>
+<code>options</code> - see EventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>an event id on success, NULL in case of error.<br>
@@ -352,7 +352,7 @@
 </dl>
 <hr>
 <a id="createEventWithOptions"> </a><h3>createEventWithOptions</h3>
-<tt>FUNCTION <b>createEventWithOptions</b>(options <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>createEventWithOptions</b>(options <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> Creates a new calendar event with an option record.</p>
 <p> Use getLastError() to retrieve the error message
@@ -362,7 +362,7 @@
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>options</code> - see eventOptionsT<br>
+<code>options</code> - see EventOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>an event id on success, NULL in case of error.<br>
@@ -403,7 +403,7 @@
 </dl>
 <hr>
 <a id="deleteEvent"> </a><h3>deleteEvent</h3>
-<tt>FUNCTION <b>deleteEvent</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>deleteEvent</b>(event <a href="#EventT">EventT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
 <dd><p> Deletes an event for the active calendar.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
@@ -417,7 +417,7 @@
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendar"> </a><h3>deleteEventFromNamedCalendar</h3>
-<tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event <a href="#eventT">eventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>deleteEventFromNamedCalendar</b>(event <a href="#EventT">EventT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
 <dd>
 <p> Deletes an event for a specific calendar (iOS only).</p>
 <p> Note that this function is not supported on Android.</p>
@@ -434,7 +434,7 @@
 </dl>
 <hr>
 <a id="deleteEventFromNamedCalendarWithFindOptions"> </a><h3>deleteEventFromNamedCalendarWithFindOptions</h3>
-<tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>deleteEventFromNamedCalendarWithFindOptions</b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, spanFutureEvents BOOLEAN, calendarName STRING) RETURNS STRING</tt><dl>
 <dd>
 <p> Deletes a set of events for a specific calendar (iOS only)</p>
 <p> Note that this function is not supported on Android.
@@ -453,7 +453,7 @@
 </dl>
 <hr>
 <a id="deleteEventWithFindOptions"> </a><h3>deleteEventWithFindOptions</h3>
-<tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>deleteEventWithFindOptions</b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, spanFutureEvents BOOLEAN) RETURNS STRING</tt><dl>
 <dd>
 <p> Deletes a set of events for the active calendar.</p>
 <p> The given parameters are used to identify one or more events,
@@ -471,7 +471,7 @@
 </dl>
 <hr>
 <a id="findEventsWithOptions"> </a><h3>findEventsWithOptions</h3>
-<tt>FUNCTION <b>findEventsWithOptions</b>(options <a href="#findOptionsT">findOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#eventT">eventT</a>, STRING</tt><dl>
+<tt>FUNCTION <b>findEventsWithOptions</b>(options <a href="#FindOptionsT">FindOptionsT</a>) RETURNS DYNAMIC ARRAY OF  <a href="#EventT">EventT</a>, STRING</tt><dl>
 <dd>
 <p> Finds calendar events based on search options.</p>
 <p> The function finds events either via id or by the combination of
@@ -479,8 +479,8 @@
  The calendarName option is only valid under iOS and only effective if
  id is not set.</p>
 <p>
-      <span><pre>   DEFINE options fglcdvCalendar.findOptionsT
-   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
+      <span><pre>   DEFINE options fglcdvCalendar.FindOptionsT
+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.EventT
    LET options=fglcdvCalendar.getFindOptions()
    LET options.startTime=CURRENT
    LET options.endTime=CURRENT+7
@@ -491,7 +491,7 @@
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>options</code> - see findOptionsT<br>
+<code>options</code> - see FindOptionsT<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>an array of events (can be empty) + an NOT NULL error string in the error case<br>
@@ -500,11 +500,11 @@
 </dl>
 <hr>
 <a id="getFindOptions"> </a><h3>getFindOptions</h3>
-<tt>FUNCTION <b>getFindOptions</b>() RETURNS <a href="#findOptionsT">findOptionsT</a></tt><dl>
+<tt>FUNCTION <b>getFindOptions</b>() RETURNS <a href="#FindOptionsT">FindOptionsT</a></tt><dl>
 <dd><p> Helper function for findEventsWithOptions</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
-<dd>an initialized findOptionsT RECORD<br>
+<dd>an initialized FindOptionsT RECORD<br>
 </dd>
 </dl></dd>
 </dl>
@@ -565,12 +565,12 @@
 </dl>
 <hr>
 <a id="isRecurring"> </a><h3>isRecurring</h3>
-<tt>FUNCTION <b>isRecurring</b>(event <a href="#eventT">eventT</a>) RETURNS BOOLEAN</tt><dl>
+<tt>FUNCTION <b>isRecurring</b>(event <a href="#EventT">EventT</a>) RETURNS BOOLEAN</tt><dl>
 <dd><p> Returns whether the given event is a recurring event.</p></dd>
 <dd><dl>
 <dt><b>Parameters:</b></dt>
 <dd>
-<code>event</code> - is an eventT returned by findEvents.<br>
+<code>event</code> - is an EventT returned by findEvents.<br>
 </dd>
 <dt><b>Returns:</b></dt>
 <dd>TRUE when event is recurring, FALSE if NOT recurring.<br>
@@ -579,7 +579,7 @@
 </dl>
 <hr>
 <a id="listCalendars"> </a><h3>listCalendars</h3>
-<tt>FUNCTION <b>listCalendars</b>() RETURNS DYNAMIC ARRAY OF  <a href="#calendarT">calendarT</a>, STRING</tt><dl>
+<tt>FUNCTION <b>listCalendars</b>() RETURNS DYNAMIC ARRAY OF  <a href="#CalendarT">CalendarT</a>, STRING</tt><dl>
 <dd><p> Returns a list of all calendars.</p></dd>
 <dd><dl>
 <dt><b>Returns:</b></dt>
@@ -589,7 +589,7 @@
 </dl>
 <hr>
 <a id="modifyEventInteractively"> </a><h3>modifyEventInteractively</h3>
-<tt>FUNCTION <b>modifyEventInteractively</b>(event <a href="#eventT">eventT</a>) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>modifyEventInteractively</b>(event <a href="#EventT">EventT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> Modifies the given event in a native UI dialog.</p>
 <p> This function is only supported on GMI/iOS.</p>
@@ -606,7 +606,7 @@
 </dl>
 <hr>
 <a id="modifyEventInteractivelyWithFindOptions"> </a><h3>modifyEventInteractivelyWithFindOptions</h3>
-<tt>FUNCTION <b>modifyEventInteractivelyWithFindOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>modifyEventInteractivelyWithFindOptions</b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> This function modifies an existing event by using a native UI dialog, with find options to identify the event.</p>
 <p> This function is only supported on GMI/iOS.</p>
@@ -626,7 +626,7 @@
 </dl>
 <hr>
 <a id="modifyEventWithOptions"> </a><h3>modifyEventWithOptions</h3>
-<tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#findOptionsT">findOptionsT</a>, changeOptions <a href="#eventOptionsT">eventOptionsT</a>) RETURNS STRING</tt><dl>
+<tt>FUNCTION <b>modifyEventWithOptions</b>(findOptions <a href="#FindOptionsT">FindOptionsT</a>, changeOptions <a href="#EventOptionsT">EventOptionsT</a>) RETURNS STRING</tt><dl>
 <dd>
 <p> This function modifies an existing event (iOS only).</p>
 <p> This function is only supported on GMI/iOS.</p>

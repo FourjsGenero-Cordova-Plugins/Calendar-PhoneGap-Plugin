@@ -12,14 +12,16 @@
 OPTIONS SHORT CIRCUIT
 IMPORT util
 IMPORT os
-CONSTANT CALENDAR="Calendar"
-CONSTANT _CALL="call"
-CONSTANT CORDOVA="cordova"
-CONSTANT CALLWOW="callWithoutWaiting"
+
+PRIVATE CONSTANT CALENDAR="Calendar"
+PRIVATE CONSTANT _CALL="call"
+PRIVATE CONSTANT CORDOVA="cordova"
+PRIVATE CONSTANT CALLWOW="callWithoutWaiting"
+
 PUBLIC TYPE TIME_AS_NUMBER DECIMAL
 PUBLIC TYPE CALENDAR_DATE DATETIME YEAR TO SECOND
 
-PUBLIC TYPE eventOptionsT RECORD
+PUBLIC TYPE EventOptionsT RECORD
    title STRING,
    location STRING,
    notes STRING,
@@ -39,13 +41,13 @@ PUBLIC TYPE eventOptionsT RECORD
    END RECORD
 END RECORD
 
-PUBLIC TYPE calendarT RECORD
+PUBLIC TYPE CalendarT RECORD
   id STRING,
   name STRING,
   type STRING
 END RECORD
 
-PUBLIC TYPE findOptionsT RECORD
+PUBLIC TYPE FindOptionsT RECORD
   title STRING,
   location STRING,
   notes STRING,
@@ -55,7 +57,7 @@ PUBLIC TYPE findOptionsT RECORD
   calendarName STRING
 END RECORD
 
-PUBLIC TYPE attendeesT RECORD
+PUBLIC TYPE AttendeesT RECORD
   name STRING,
   URL STRING,
   status STRING,
@@ -73,7 +75,7 @@ PUBLIC TYPE RecurrenceRuleT RECORD
   count INT --if set then it means recurring stops after <count> occurences
 END RECORD
 
-PUBLIC TYPE eventT RECORD --return type for find function
+PUBLIC TYPE EventT RECORD --return type for find function
     title STRING,
     calendar STRING,
     id STRING,
@@ -86,11 +88,11 @@ PUBLIC TYPE eventT RECORD --return type for find function
     url STRING,
     notes STRING,
     allday BOOLEAN,
-    attendees DYNAMIC ARRAY OF attendeesT,
+    attendees DYNAMIC ARRAY OF AttendeesT,
     rrule RecurrenceRuleT
 END RECORD
 
-TYPE eventTypeInternal RECORD --return type for find function
+PRIVATE TYPE EventTypeInternal RECORD --return type for find function
     title STRING,
     calendar STRING,
     id STRING,
@@ -253,7 +255,7 @@ END FUNCTION
   LET opJS.startTime=dateTime2MilliSinceEpoch(opFGL.startDate)  \
   LET opJS.endTime=dateTime2MilliSinceEpoch(opFGL.endDate)
 
-PRIVATE FUNCTION outer2Int(opts eventOptionsT)
+PRIVATE FUNCTION outer2Int(opts EventOptionsT)
    DEFINE d0,d1 DATE
    INITIALIZE optionsInt.* TO NULL
    LET optionsInt.title=opts.title
@@ -285,9 +287,9 @@ END FUNCTION
 #+ On iOS, the event id can be used to modify or delete the event.
 #+ On Android, the event id cannot be used for further operations.
 #+
-#+ @param options see eventOptionsT
+#+ @param options see EventOptionsT
 #+ @return an event id on success, NULL in case of error.
-PUBLIC FUNCTION createEventWithOptions(options eventOptionsT) RETURNS STRING
+PUBLIC FUNCTION createEventWithOptions(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
     TRY
@@ -305,9 +307,9 @@ END FUNCTION
 #+ On iOS, the event id can be used to modify or delete the event.
 #+ On Android, the event id cannot be used for further operations.
 #+
-#+ @param options see eventOptionsT
+#+ @param options see EventOptionsT
 #+ @return an event id on success, NULL in case of error.
-PUBLIC FUNCTION createEventInteractively(options eventOptionsT) RETURNS STRING
+PUBLIC FUNCTION createEventInteractively(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
     TRY
@@ -329,8 +331,8 @@ END FUNCTION
 #+ @param calendarName must not be NULL.
 #+ @return all events and an error string in case the operation failed.
 PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING) 
-           --RETURNS DYNAMIC ARRAY OF eventT ,STRING
-  DEFINE arr DYNAMIC ARRAY OF eventT
+           --RETURNS DYNAMIC ARRAY OF EventT ,STRING
+  DEFINE arr DYNAMIC ARRAY OF EventT
   DEFINE options calendarOptionsT
   DEFINE err STRING
   CALL getCalendarOptions() RETURNING options.*
@@ -380,7 +382,7 @@ END FUNCTION
 #+ @param changeOptions contains the values to override the old values in the event. 
 #+
 #+ @return the event Identifier if a change took place, NULL in case of error.
-FUNCTION modifyEventWithOptions(findOptions findOptionsT,changeOptions eventOptionsT) RETURNS STRING
+FUNCTION modifyEventWithOptions(findOptions FindOptionsT,changeOptions EventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
     title STRING ATTRIBUTE(json_null="null"),
@@ -447,7 +449,7 @@ END FUNCTION
 #+ Using NULL for the id uses the title, location, etc. to find the event
 #+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
-FUNCTION modifyEventInteractivelyWithFindOptions(findOptions findOptionsT) RETURNS STRING
+FUNCTION modifyEventInteractivelyWithFindOptions(findOptions FindOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
     id STRING,
@@ -484,8 +486,8 @@ END FUNCTION
 #+ @param event the event to modify
 #+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
-FUNCTION modifyEventInteractively(event eventT) RETURNS STRING
-  DEFINE findOpts findOptionsT
+FUNCTION modifyEventInteractively(event EventT) RETURNS STRING
+  DEFINE findOpts FindOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   LET findOpts.calendarName=event.calendar
@@ -507,14 +509,14 @@ END FUNCTION
 #+ Returns a list of all calendars.
 #+
 #+ @return a list of calendars + a non NULL error string in case of error.
-FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF calendarT,STRING)
+FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF CalendarT,STRING)
   DEFINE internal DYNAMIC ARRAY OF RECORD
     id STRING,
     name STRING,
     displayName STRING,
     type STRING
   END RECORD
-  DEFINE result DYNAMIC ARRAY OF calendarT
+  DEFINE result DYNAMIC ARRAY OF CalendarT
   DEFINE i INT
   DEFINE err STRING
   TRY
@@ -553,7 +555,7 @@ END FUNCTION
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions findOptionsT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
+FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions FindOptionsT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
   DEFINE internal deleteOptionsT
   DEFINE result STRING
   LET internal.id=findOptions.id
@@ -585,7 +587,7 @@ END FUNCTION
 #+ @param findOptions same as for finding an event
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in the error case, an non NULL string if the deletion was successful. Use getLastError() to get the error reason
-FUNCTION deleteEventWithFindOptions(findOptions findOptionsT,spanFutureEvents BOOLEAN) RETURNS STRING
+FUNCTION deleteEventWithFindOptions(findOptions FindOptionsT,spanFutureEvents BOOLEAN) RETURNS STRING
   RETURN deleteEventFromNamedCalendarWithFindOptions(findOptions.*,spanFutureEvents,NULL)
 END FUNCTION
 
@@ -594,8 +596,8 @@ END FUNCTION
 #+ @param event structure returned by findEvent
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEvent(event eventT,spanFutureEvents BOOLEAN) RETURNS STRING
-  DEFINE findOpts findOptionsT
+FUNCTION deleteEvent(event EventT,spanFutureEvents BOOLEAN) RETURNS STRING
+  DEFINE findOpts FindOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   RETURN deleteEventWithFindOptions(findOpts.*,spanFutureEvents)
@@ -609,8 +611,8 @@ END FUNCTION
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place.
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEventFromNamedCalendar(event eventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
-  DEFINE findOpts findOptionsT
+FUNCTION deleteEventFromNamedCalendar(event EventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
+  DEFINE findOpts FindOptionsT
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   RETURN deleteEventFromNamedCalendarWithFindOptions(findOpts.*,spanFutureEvents,calendarName)
@@ -618,18 +620,18 @@ END FUNCTION
 
 #+ Helper function for findEventsWithOptions
 #+
-#+ @return an initialized findOptionsT RECORD
-FUNCTION getFindOptions() RETURNS findOptionsT
-  DEFINE fo findOptionsT
+#+ @return an initialized FindOptionsT RECORD
+FUNCTION getFindOptions() RETURNS FindOptionsT
+  DEFINE fo FindOptionsT
   INITIALIZE fo.* TO NULL
   RETURN fo.*
 END FUNCTION
 
 #+ Returns whether the given event is a recurring event.
 #+
-#+ @param event is an eventT returned by findEvents.
+#+ @param event is an EventT returned by findEvents.
 #+ @return TRUE when event is recurring, FALSE if NOT recurring.
-FUNCTION isRecurring(event eventT) RETURNS BOOLEAN
+FUNCTION isRecurring(event EventT) RETURNS BOOLEAN
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
 
@@ -640,21 +642,21 @@ END FUNCTION
 #+ The calendarName option is only valid under iOS and only effective if 
 #+ id is not set.
 #+
-#+ @param options see findOptionsT
+#+ @param options see FindOptionsT
 #+ @return an array of events (can be empty) + an NOT NULL error string in the error case
 #+
 #+ @code
-#+   DEFINE options fglcdvCalendar.findOptionsT
-#+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.eventT
+#+   DEFINE options fglcdvCalendar.FindOptionsT
+#+   DEFINE eventArr DYNAMIC ARRAY OF fglcdvCalendar.EventT
 #+   LET options=fglcdvCalendar.getFindOptions()
 #+   LET options.startTime=CURRENT
 #+   LET options.endTime=CURRENT+7
 #+   --return the events for 1 week in the default calendar
 #+   CALL fglcdvCalendar.findEventWithOptions(options) RETURNING eventArr
 #+
-FUNCTION findEventsWithOptions(options findOptionsT) RETURNS (DYNAMIC ARRAY OF eventT,STRING)
-  DEFINE arr DYNAMIC ARRAY OF eventTypeInternal
-  DEFINE results DYNAMIC ARRAY OF eventT
+FUNCTION findEventsWithOptions(options FindOptionsT) RETURNS (DYNAMIC ARRAY OF EventT,STRING)
+  DEFINE arr DYNAMIC ARRAY OF EventTypeInternal
+  DEFINE results DYNAMIC ARRAY OF EventT
   DEFINE internal RECORD
     title STRING ATTRIBUTE(json_null="null"),
     location STRING ATTRIBUTE(json_null="null"),
@@ -666,7 +668,7 @@ FUNCTION findEventsWithOptions(options findOptionsT) RETURNS (DYNAMIC ARRAY OF e
       calendarName STRING ATTRIBUTE(json_null="null")
     END RECORD
   END RECORD
-  DEFINE ev eventTypeInternal
+  DEFINE ev EventTypeInternal
   DEFINE err STRING
   DEFINE i, len INT
   LET internal.title=options.title
