@@ -19,30 +19,31 @@ IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
 
 PLUGIN=Calendar-PhoneGap-Plugin
-
 # in case you build the demo when having the plugin checked out of github 
 # then we use the fglcvdCalendar.42m in the fgl dir of the plugin
-ifneq ($(wildcard ../../fgl),)
-export FGLLDPATH    = ../../fgl
-PLUGIN= $(CURDIR)/../..
+ifneq ($(wildcard ../../fgldemo),)
+  PLUGIN=../..
+  FGLLDPATH=../../fgl
 endif
 
 MODULES  = $(patsubst %.4gl, %.42m, $(wildcard *.4gl))
 FORMS    = $(patsubst %.per, %.42f, $(wildcard *.per))
 
 %.42m: %.4gl
-	fglcomp -M $*
+	FGLLDPATH=$(FGLLDPATH) fglcomp -M $*
 
 %.42f: %.per
 	fglform -M $*
 
 all:: $(MODULES) $(FORMS)
 
+main.42m: calendars.42f events.42f newevent.42f
+
+run: main.42m
+	FGLLDPATH=$(FGLLDPATH) fglrun main
 
 gmi.install: all
 	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=$(INSTALL) --mode=$(MODE) --build-cordova=$(PLUGIN)
-
-main.42m: calendars.42f events.42f newevent.42f
 
 clean::
 	rm -rf build bin distbin
