@@ -175,19 +175,31 @@ PRIVATE TYPE deleteOptionsT RECORD
    spanFutureEvents BOOLEAN ATTRIBUTE(json_null="null")
 END RECORD
 
-DEFINE m_error STRING --holds the error message from the last operation
+PRIVATE DEFINE m_error STRING --holds the error message from the last operation
+
+PRIVATE DEFINE initialized BOOLEAN
+
+#+ Provided for backward compatibility, use initialize() instead.
+PUBLIC FUNCTION init()
+  CALL initialize()
+END FUNCTION
 
 #+ Initializes the fglcdvCalendar Cordova plugin library.
 #+
 #+ This function must be called prior to other calls for the plugin library.
-PUBLIC FUNCTION init()
+PUBLIC FUNCTION initialize()
   DEFINE doc om.DomDocument
   DEFINE root,n,p om.DomNode
   DEFINE nlm,nld om.NodeList
-#+ GMI: If the plugin is initialized in the very first instructions
-#+ of the mobile program, the delaying mechanism for the splash screen
-#+ may block the whole startup (because the plugin initialization blocks the main thread), 
-#+ so we create a temporary menu to let the iOS event loop kick in.
+  IF initialized THEN -- exclusive library usage
+     CALL fatalError("The library is already in use.")
+  END IF
+  LET initialized = TRUE
+-- FIXME? WCG-104:
+-- GMI: If the plugin is initialized in the very first instructions of the
+-- mobile program, the delaying mechanism for the splash screen may block
+-- the whole startup (because the plugin initialization blocks the main
+-- thread), so we create a temporary menu to let the iOS event loop kick in.
   IF ui.Interface.getFrontEndName()=="GMI" OR ui.Interface.getFrontEndName()=="GMA" THEN
     LET doc=ui.Interface.getDocument()
     LET root=doc.getDocumentElement()
@@ -209,6 +221,28 @@ PUBLIC FUNCTION init()
     END IF
     CALL ui.Interface.refresh()
   END IF
+END FUNCTION
+
+#+ Finalizes the plugin library
+#+
+#+ The finalize() function should be called when the library is no longer used.
+#+
+PUBLIC FUNCTION finalize()
+    IF initialized THEN
+        -- do fini stuff
+        LET initialized = FALSE
+    END IF
+END FUNCTION
+
+PRIVATE FUNCTION fatalError(msg STRING)
+    DISPLAY "fglcdvCalendar error: ", msg
+    EXIT PROGRAM 1
+END FUNCTION
+
+PRIVATE FUNCTION check_lib_state()
+    IF NOT initialized THEN
+        CALL fatalError("Library is not initialized.")
+    END IF
 END FUNCTION
 
 PRIVATE FUNCTION err_frontcall()
@@ -245,6 +279,7 @@ END FUNCTION
 #+ @param d the CALENDAR_DATE to convert
 #+ @return the milliseconds since 1970-01-01
 PUBLIC FUNCTION dateTime2MilliSinceEpoch(d CALENDAR_DATE)
+  CALL check_lib_state()
   IF d IS NULL THEN
     RETURN NULL
   END IF
@@ -291,6 +326,7 @@ END FUNCTION
 #+ @return an event id on success, NULL in case of error.
 PUBLIC FUNCTION createEventWithOptions(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
+    CALL check_lib_state()
     CALL outer2Int(options.*) 
     TRY
       CALL ui.interface.frontcall(CORDOVA,_CALL,
@@ -311,6 +347,7 @@ END FUNCTION
 #+ @return an event id on success, NULL in case of error.
 PUBLIC FUNCTION createEventInteractively(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
+    CALL check_lib_state()
     CALL outer2Int(options.*) 
     TRY
       CALL ui.interface.frontcall(CORDOVA,_CALL,
@@ -335,6 +372,7 @@ PUBLIC FUNCTION findAllEventsInNamedCalendar(calendarName STRING)
   DEFINE arr DYNAMIC ARRAY OF EventT
   DEFINE options calendarOptionsT
   DEFINE err STRING
+  CALL check_lib_state()
   CALL getCalendarOptions() RETURNING options.*
   LET options.calendarName=calendarName
   TRY
@@ -353,9 +391,10 @@ END FUNCTION
 #+ @param calendarName name for the newly created calendar.
 #+ @param color an RGB value in the style of '#ff0000' is required, or NULL.
 #+ @return NULL on error, an id for the created calendar
-FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
+PUBLIC FUNCTION createCalendar(calendarName STRING,color STRING) RETURNS STRING
   DEFINE result STRING
   DEFINE options calendarOptionsT
+  CALL check_lib_state()
   LET options.calendarName=calendarName
   LET options.calendarColor=color
   TRY
@@ -382,7 +421,7 @@ END FUNCTION
 #+ @param changeOptions contains the values to override the old values in the event. 
 #+
 #+ @return the event Identifier if a change took place, NULL in case of error.
-FUNCTION modifyEventWithOptions(findOptions FindOptionsT,changeOptions EventOptionsT) RETURNS STRING
+PUBLIC FUNCTION modifyEventWithOptions(findOptions FindOptionsT,changeOptions EventOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
     title STRING ATTRIBUTE(json_null="null"),
@@ -411,6 +450,7 @@ FUNCTION modifyEventWithOptions(findOptions FindOptionsT,changeOptions EventOpti
       spanFutureEvents BOOLEAN ATTRIBUTE(json_null="null")
     END RECORD
   END RECORD
+  CALL check_lib_state()
   ASSIGN_RECORD(findOptions,internal)
   LET internal.options.id=findOptions.id
   LET internal.options.calendarName=findOptions.calendarName
@@ -449,7 +489,7 @@ END FUNCTION
 #+ Using NULL for the id uses the title, location, etc. to find the event
 #+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
-FUNCTION modifyEventInteractivelyWithFindOptions(findOptions FindOptionsT) RETURNS STRING
+PUBLIC FUNCTION modifyEventInteractivelyWithFindOptions(findOptions FindOptionsT) RETURNS STRING
   DEFINE result STRING
   DEFINE internal RECORD
     id STRING,
@@ -460,6 +500,7 @@ FUNCTION modifyEventInteractivelyWithFindOptions(findOptions FindOptionsT) RETUR
     startTime TIME_AS_NUMBER ,
     endTime TIME_AS_NUMBER 
   END RECORD
+  CALL check_lib_state()
   LET internal.id=findOptions.id
   LET internal.calendarName=findOptions.calendarName
   LET internal.title=findOptions.title
@@ -486,8 +527,9 @@ END FUNCTION
 #+ @param event the event to modify
 #+
 #+ @return "Canceled", "Saved" or "Deleted" to indicate the action performed in the modification dialog.
-FUNCTION modifyEventInteractively(event EventT) RETURNS STRING
+PUBLIC FUNCTION modifyEventInteractively(event EventT) RETURNS STRING
   DEFINE findOpts FindOptionsT
+  CALL check_lib_state()
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   LET findOpts.calendarName=event.calendar
@@ -497,10 +539,11 @@ END FUNCTION
 #+ Opens the calendar app on the device for a specific date.
 #+
 #+ @param d The date to display in the calendar app.
-FUNCTION openCalendar(d CALENDAR_DATE)
+PUBLIC FUNCTION openCalendar(d CALENDAR_DATE)
   DEFINE options RECORD
     date TIME_AS_NUMBER
   END RECORD
+  CALL check_lib_state()
   LET options.date=dateTime2MilliSinceEpoch(d)
   CALL ui.Interface.frontCall(CORDOVA,CALLWOW,
                              [CALENDAR,"openCalendar",options],[])
@@ -509,7 +552,7 @@ END FUNCTION
 #+ Returns a list of all calendars.
 #+
 #+ @return a list of calendars + a non NULL error string in case of error.
-FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF CalendarT,STRING)
+PUBLIC FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF CalendarT,STRING)
   DEFINE internal DYNAMIC ARRAY OF RECORD
     id STRING,
     name STRING,
@@ -519,6 +562,7 @@ FUNCTION listCalendars() RETURNS (DYNAMIC ARRAY OF CalendarT,STRING)
   DEFINE result DYNAMIC ARRAY OF CalendarT
   DEFINE i INT
   DEFINE err STRING
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"listCalendars"],[internal])
@@ -538,8 +582,9 @@ END FUNCTION
 
 {
 #+ Does nothing on iOS, needs to be checked on Android.
-FUNCTION listEventsInRange()
+PUBLIC FUNCTION listEventsInRange()
   DEFINE result STRING
+  CALL check_lib_state()
   CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"listEventsInRange"],[result])
 END FUNCTION
@@ -555,9 +600,13 @@ END FUNCTION
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEventFromNamedCalendarWithFindOptions(findOptions FindOptionsT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
+PUBLIC FUNCTION deleteEventFromNamedCalendarWithFindOptions(
+             findOptions FindOptionsT,
+             spanFutureEvents BOOLEAN,
+             calendarName STRING) RETURNS STRING
   DEFINE internal deleteOptionsT
   DEFINE result STRING
+  CALL check_lib_state()
   LET internal.id=findOptions.id
   LET internal.title=findOptions.title
   LET internal.location=findOptions.location
@@ -587,7 +636,8 @@ END FUNCTION
 #+ @param findOptions same as for finding an event
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in the error case, an non NULL string if the deletion was successful. Use getLastError() to get the error reason
-FUNCTION deleteEventWithFindOptions(findOptions FindOptionsT,spanFutureEvents BOOLEAN) RETURNS STRING
+PUBLIC FUNCTION deleteEventWithFindOptions(findOptions FindOptionsT,spanFutureEvents BOOLEAN) RETURNS STRING
+  CALL check_lib_state()
   RETURN deleteEventFromNamedCalendarWithFindOptions(findOptions.*,spanFutureEvents,NULL)
 END FUNCTION
 
@@ -596,8 +646,9 @@ END FUNCTION
 #+ @param event structure returned by findEvent
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEvent(event EventT,spanFutureEvents BOOLEAN) RETURNS STRING
+PUBLIC FUNCTION deleteEvent(event EventT,spanFutureEvents BOOLEAN) RETURNS STRING
   DEFINE findOpts FindOptionsT
+  CALL check_lib_state()
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   RETURN deleteEventWithFindOptions(findOpts.*,spanFutureEvents)
@@ -611,8 +662,9 @@ END FUNCTION
 #+ @param spanFutureEvents If set and the event is recurring, all recurring events will be removed too, otherwise only the event with matching startDate etc will be deleted.
 #+ @param calendarName calendar where the deletion should take place.
 #+ @return NULL in case of error, a non NULL string if the deletion was successful. Use getLastError() to get the error reason.
-FUNCTION deleteEventFromNamedCalendar(event EventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
+PUBLIC FUNCTION deleteEventFromNamedCalendar(event EventT,spanFutureEvents BOOLEAN,calendarName STRING) RETURNS STRING
   DEFINE findOpts FindOptionsT
+  CALL check_lib_state()
   INITIALIZE findOpts.* TO NULL
   ASSIGN_RECORD(event,findOpts)
   RETURN deleteEventFromNamedCalendarWithFindOptions(findOpts.*,spanFutureEvents,calendarName)
@@ -621,8 +673,9 @@ END FUNCTION
 #+ Helper function for findEventsWithOptions
 #+
 #+ @return an initialized FindOptionsT RECORD
-FUNCTION getFindOptions() RETURNS FindOptionsT
+PUBLIC FUNCTION getFindOptions() RETURNS FindOptionsT
   DEFINE fo FindOptionsT
+  CALL check_lib_state()
   INITIALIZE fo.* TO NULL
   RETURN fo.*
 END FUNCTION
@@ -631,7 +684,8 @@ END FUNCTION
 #+
 #+ @param event is an EventT returned by findEvents.
 #+ @return TRUE when event is recurring, FALSE if NOT recurring.
-FUNCTION isRecurring(event EventT) RETURNS BOOLEAN
+PUBLIC FUNCTION isRecurring(event EventT) RETURNS BOOLEAN
+  CALL check_lib_state()
   RETURN event.rrule.freq IS NOT NULL
 END FUNCTION
 
@@ -654,7 +708,7 @@ END FUNCTION
 #+   --return the events for 1 week in the default calendar
 #+   CALL fglcdvCalendar.findEventWithOptions(options) RETURNING eventArr
 #+
-FUNCTION findEventsWithOptions(options FindOptionsT) RETURNS (DYNAMIC ARRAY OF EventT,STRING)
+PUBLIC FUNCTION findEventsWithOptions(options FindOptionsT) RETURNS (DYNAMIC ARRAY OF EventT,STRING)
   DEFINE arr DYNAMIC ARRAY OF EventTypeInternal
   DEFINE results DYNAMIC ARRAY OF EventT
   DEFINE internal RECORD
@@ -671,6 +725,7 @@ FUNCTION findEventsWithOptions(options FindOptionsT) RETURNS (DYNAMIC ARRAY OF E
   DEFINE ev EventTypeInternal
   DEFINE err STRING
   DEFINE i, len INT
+  CALL check_lib_state()
   LET internal.title=options.title
   LET internal.location=options.location
   LET internal.notes=options.notes
@@ -738,9 +793,10 @@ END FUNCTION
 #+
 #+ @param calendarName is the name of the calendar to be deleted
 #+ @return NULL on error , an ok string indicating the deletion was performed otherwise
-FUNCTION deleteCalendar(calendarName STRING) RETURNS STRING
+PUBLIC FUNCTION deleteCalendar(calendarName STRING) RETURNS STRING
   DEFINE result STRING
   DEFINE options calendarOptionsT
+  CALL check_lib_state()
   LET options.calendarName=calendarName
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
@@ -759,8 +815,9 @@ END FUNCTION
 #+ On iOS this includes also the write permission
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION hasReadPermission() RETURNS BOOLEAN
+PUBLIC FUNCTION hasReadPermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"hasReadPermission"],[result])
@@ -774,8 +831,9 @@ END FUNCTION
 #+ On iOS this includes also the read permission
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION hasWritePermission() RETURNS BOOLEAN
+PUBLIC FUNCTION hasWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"hasWritePermission"],[result])
@@ -787,8 +845,9 @@ END FUNCTION
 #+ Checks if we are allowed to read/write information from/to device's Calendar
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION hasReadWritePermission() RETURNS BOOLEAN
+PUBLIC FUNCTION hasReadWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"hasReadWritePermission"],[result])
@@ -802,8 +861,9 @@ END FUNCTION
 #+ On iOS this includes also the write permission
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION requestReadPermission() RETURNS BOOLEAN
+PUBLIC FUNCTION requestReadPermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"requestReadPermission"],[result])
@@ -817,8 +877,9 @@ END FUNCTION
 #+ On iOS this includes also the read permission
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION requestWritePermission() RETURNS BOOLEAN
+PUBLIC FUNCTION requestWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
    CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"requestWritePermission"],[result])
@@ -830,8 +891,9 @@ END FUNCTION
 #+ Open a permission dialog to read from and write to device's Calendar
 #+
 #+ @return TRUE upon success, FALSE otherwise
-FUNCTION requestReadWritePermission() RETURNS BOOLEAN
+PUBLIC FUNCTION requestReadWritePermission() RETURNS BOOLEAN
   DEFINE result BOOLEAN
+  CALL check_lib_state()
   TRY
     CALL ui.Interface.frontCall(CORDOVA,_CALL,
                              [CALENDAR,"requestReadWritePermission"],[result])
@@ -843,6 +905,6 @@ END FUNCTION
 #+ Returns the last Error message of the previous operation 
 #+
 #+ @return the error message
-FUNCTION getLastError() RETURNS STRING
+PUBLIC FUNCTION getLastError() RETURNS STRING
   RETURN m_error
 END FUNCTION

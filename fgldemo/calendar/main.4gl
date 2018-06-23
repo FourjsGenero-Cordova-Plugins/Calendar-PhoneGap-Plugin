@@ -28,7 +28,7 @@ END RECORD
 &define ASSIGN_RECORD(src,dest) CALL util.JSON.parse(util.JSON.stringify(src),dest)
 
 MAIN
-    CALL fglcdvCalendar.init() --mandatory entry point
+    CALL fglcdvCalendar.initialize() --mandatory entry point
     --check the permissions once here to avoid to do that in several places
     DISPLAY "hasReadWrite:",fglcdvCalendar.hasReadWritePermission()
     IF ui.Interface.getFrontEndName()=="GMI" AND NOT fglcdvCalendar.requestReadWritePermission() THEN
