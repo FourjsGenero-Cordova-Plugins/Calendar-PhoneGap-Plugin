@@ -226,11 +226,16 @@ LABEL refresh:
       IF cancelDelete THEN
         CONTINUE DISPLAY
       END IF
-      CALL fglcdvCalendar.deleteEvent(event.*,spanFutureEvents) RETURNING result
+      IF ui.Interface.getFrontEndName()=="GMI" THEN
+        CALL fglcdvCalendar.deleteEventFromNamedCalendar(event.*,spanFutureEvents,calendarName) RETURNING result
+      ELSE
+        CALL fglcdvCalendar.deleteEvent(event.*,spanFutureEvents) RETURNING result
+      END IF
       IF result IS NULL THEN
         LET int_flag=TRUE
         ERROR "Can't delete:",fglcdvCalendar.getLastError()
       ELSE
+        MESSAGE "result:",result
         REFRESH_LIST()
       END IF
     ON APPEND
