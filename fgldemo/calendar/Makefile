@@ -15,7 +15,6 @@ BUNDLE_IDENTIFIER_GMA = com.fourjs.cdvcalendar
 APPNAME             = CDVCalendar
 DEVICE              = simulator
 MODE                = debug
-INSTALL             = yes
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
 
@@ -52,14 +51,14 @@ main.42m: calendars.42f events.42f newevent.42f
 run: main.42m
 	FGLLDPATH=$(FGLLDPATH) fglrun main
 
+gmi.build: all
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=no --mode=$(MODE) --build-cordova=$(PLUGIN)
+
 gmi.install: all
-	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=$(INSTALL) --mode=$(MODE) --build-cordova=$(PLUGIN)
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=yes --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 fglcdvCalendar.42m:
 	cp $(FGLLDPATH)/fglcdvCalendar.42m $@
-
-ifneq ($(wildcard ../../fgldemo),)
-endif
 
 gma.build: all fglcdvCalendar.42m
 ifneq ($(wildcard ../../fgldemo),)
