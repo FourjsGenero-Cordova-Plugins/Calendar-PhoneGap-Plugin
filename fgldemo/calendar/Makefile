@@ -65,7 +65,7 @@ ifneq ($(wildcard ../../fgldemo),)
 #build the plugin out of this repository and do not use the bundled one
 	cd ../../.. && gmabuildtool scaffold --install-plugins $(GMAPLUGIN) && cd -
 endif
-	gmabuildtool build --build-quietly --build-cordova $(GMAPLUGIN) --build-app-package-name $(BUNDLE_IDENTIFIER_GMA) --build-app-genero-program .
+	gmabuildtool build --build-quietly --build-cordova $(GMAPLUGIN) --build-app-package-name $(BUNDLE_IDENTIFIER_GMA) 
 
 gma.installsim: gma.build
 	$$ANDROID_SDK_ROOT/platform-tools/adb install -r ./gma/project/app/build/app/outputs/apk/app-unsigned.apk
