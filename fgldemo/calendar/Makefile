@@ -17,6 +17,7 @@ DEVICE              = simulator
 MODE                = debug
 IDENTITY='(59W7RY75ZU)'
 PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_wildcard
+INSTALL=yes
 
 PLUGIN=Calendar-PhoneGap-Plugin
 GMAPLUGIN=$(PLUGIN)
@@ -55,7 +56,7 @@ gmi.build: all
 	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=no --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 gmi.install: all
-	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=yes --mode=$(MODE) --build-cordova=$(PLUGIN)
+	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=$(INSTALL) --mode=$(MODE) --build-cordova=$(PLUGIN)
 
 fglcdvCalendar.42m:
 	cp $(FGLLDPATH)/fglcdvCalendar.42m $@
