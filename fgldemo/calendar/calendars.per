@@ -8,10 +8,21 @@
 # purely for information purposes only.
 
 LAYOUT(TEXT="Calendars")
-STACK
-TABLE arr
-PHANTOM FORMONLY.id;
-EDIT FORMONLY.name;
-EDIT FORMONLY.type;
+TABLE
+{
+[name      |type     ]
+[name      |type     ]
+[name      |type     ]
+[name      |type     ]
+[name      |type     ]
+[name      |type     ]
+}
 END
+ATTRIBUTES
+PHANTOM FORMONLY.id;
+EDIT name=FORMONLY.name;
+EDIT type=FORMONLY.type;
+END
+INSTRUCTIONS
+ SCREEN RECORD arr(id,name,type);
 END

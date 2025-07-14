@@ -20,12 +20,11 @@ PROVISIONING_PROFILE=/Users/leo/Library/MobileDevice/Provisioning\ Profiles/4js_
 INSTALL=yes
 
 PLUGIN=Calendar-PhoneGap-Plugin
-GMAPLUGIN=$(PLUGIN)
 # in case you build the demo when having the plugin checked out of github 
 # then we use the fglcvdCalendar.42m in the fgl dir of the plugin
 ifneq ($(wildcard ../../fgldemo),)
   PLUGIN=../..
-  FGLLDPATH=../../fgl
+  export FGLLDPATH=../../fgl
 # figure out the directory name of the plugin because 
 # gmabuildtool can't handle a plugin name like ../..
 # in the scaffold --install-plugin option
@@ -34,23 +33,30 @@ ifneq ($(wildcard ../../fgldemo),)
   PLUGINDIR=$(shell dirname $(DEMODIR))
   GMAPLUGIN=$(notdir $(PLUGINDIR))
 # $(warning ABSPATH=$(ABSPATH),DEMODIR=$(DEMODIR),PLUGINDIR=$(PLUGINDIR),GMAPLUGIN=$(GMAPLUGIN))
+else
+  GMAPLUGIN=$(PLUGIN)
 endif
 
 MODULES  = $(patsubst %.4gl, %.42m, $(wildcard *.4gl))
 FORMS    = $(patsubst %.per, %.42f, $(wildcard *.per))
 
 %.42m: %.4gl
-	FGLLDPATH=$(FGLLDPATH) fglcomp -M $*
+	fglcomp -M $*
 
 %.42f: %.per
 	fglform -M $*
 
 all:: $(MODULES) $(FORMS)
 
-main.42m: calendars.42f events.42f newevent.42f
+ifneq ($(wildcard ../../fgldemo),)
+FGLCDVCALENDAR_42M=../../fgl/fglcdvCalendar.42m
+../../fgl/fglcdvCalendar.42m: ../../fgl/fglcdvCalendar.4gl
+	$(MAKE) -C ../../fgl
+endif
+main.42m: $(FGLCDVCALENDAR_42M) calendars.42f events.42f newevent.42f
 
 run: main.42m
-	FGLLDPATH=$(FGLLDPATH) fglrun main
+	fglrun main
 
 gmi.build: all
 	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=no --mode=$(MODE) --build-cordova=$(PLUGIN)
@@ -58,19 +64,22 @@ gmi.build: all
 gmi.install: all
 	gmibuildtool --app-name=$(APPNAME) --bundle-id=$(BUNDLE_IDENTIFIER) --provisioning=$(PROVISIONING_PROFILE) --certificate=$(IDENTITY) --device=$(DEVICE) --install=$(INSTALL) --mode=$(MODE) --build-cordova=$(PLUGIN)
 
-fglcdvCalendar.42m:
-	cp $(FGLLDPATH)/fglcdvCalendar.42m $@
-
-gma.build: all fglcdvCalendar.42m
+gma.build: all
 ifneq ($(wildcard ../../fgldemo),)
 #build the plugin out of this repository and do not use the bundled one
-	cd ../../.. && gmabuildtool scaffold --install-plugins $(GMAPLUGIN) && cd -
+	rm -rf project
+	gmabuildtool scaffold --install-plugins ../../../$(GMAPLUGIN)
 endif
-	gmabuildtool build --build-quietly --build-cordova $(GMAPLUGIN) --build-app-package-name $(BUNDLE_IDENTIFIER_GMA) 
+	gmabuildtool build -map main.42m --build-quietly --build-cordova $(GMAPLUGIN) --build-app-name $(APPNAME) --build-app-package-name $(BUNDLE_IDENTIFIER_GMA) 
 
-gma.installsim: gma.build
-	$$ANDROID_SDK_ROOT/platform-tools/adb install -r ./gma/project/app/build/app/outputs/apk/app-unsigned.apk
+
+gma.install: gma.build
+#	adb install -r ./gma/project/app/build/app/outputs/apk/app-unsigned.apk
+	adb install -r project/build/app/outputs/apk/gma/app.apk
 
 clean::
-	rm -rf build bin distbin gma
+	rm -rf build bin distbin gma project
 	rm -f *.42* gmi/*.a gmi/link_flags.sh *.4pwvs *.4pwdb
+ifneq ($(wildcard ../../fgldemo),)
+	rm -f ../../fgl/fglcdvCalendar.42m
+endif

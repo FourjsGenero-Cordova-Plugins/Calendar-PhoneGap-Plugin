@@ -293,7 +293,7 @@ PUBLIC FUNCTION createEventWithOptions(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
     TRY
-      CALL ui.interface.frontcall(CORDOVA,_CALL,
+      CALL ui.Interface.frontCall(CORDOVA,_CALL,
         [CALENDAR,"createEventWithOptions",optionsInt],[result])
     CATCH
       CALL err_frontcall()
@@ -313,7 +313,7 @@ PUBLIC FUNCTION createEventInteractively(options EventOptionsT) RETURNS STRING
     DEFINE result STRING
     CALL outer2Int(options.*) 
     TRY
-      CALL ui.interface.frontcall(CORDOVA,_CALL,
+      CALL ui.Interface.frontCall(CORDOVA,_CALL,
         [CALENDAR,"createEventInteractively",optionsInt],[result])
     CATCH
       CALL err_frontcall()
@@ -718,7 +718,7 @@ FUNCTION findEventsWithOptions(options FindOptionsT) RETURNS (DYNAMIC ARRAY OF E
       END IF
       --wkst,byday,bymonthday are not set on iOS
     WHEN ev.recurrence.freq IS NOT NULL AND ui.Interface.getFrontEndName()=="GMA"
-      LET results[i].rrule.freq=DOWNSHIFT(ev.recurrence.freq)
+      LET results[i].rrule.freq=downshift(ev.recurrence.freq)
       LET results[i].rrule.wkst=ev.recurrence.wkst
       LET results[i].rrule.byday=ev.recurrence.byday
       LET results[i].rrule.bymonthday=ev.recurrence.bymonthday

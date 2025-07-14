@@ -8,38 +8,71 @@
 # purely for information purposes only.
 
 LAYOUT(TEXT="Event")
-STACK
+VBOX
 GROUP --(TEXT="Title")
-EDIT FORMONLY.TITLE,COMMENT="<Enter Title>",JUSTIFY=LEFT;
-END
+GRID
+{
+  Title[title        ]
+}
+END --GRID
+END --GROUP
+
 GROUP
-CHECKBOX FORMONLY.allday,TITLE="All-day";
-DATETIMEEDIT FORMONLY.startDate,TITLE="Starts",NOT NULL;
-DATETIMEEDIT FORMONLY.endDate,TITLE="Ends",NOT NULL;
-COMBOBOX FORMONLY.freq,TITLE="Repeat",ITEMS=((NULL,"Never"),
+GRID
+{
+ [allday           ]
+  Starts [startDate]
+  Ends   [endDate  ]
+  Repeat [freq     ]
+}
+END
+END
+
+GROUP (TEXT="Alerts")
+GRID
+{
+  Alert        [first  ]
+  Second Alert [second ]
+}
+END
+END
+
+GROUP
+GRID
+{
+  URL [url        ]
+  Notes
+ [notes           ]
+ [                ]
+ [                ]
+}
+END
+
+END
+END
+ATTRIBUTES
+EDIT title=FORMONLY.TITLE,COMMENT="<Enter Title>",JUSTIFY=LEFT;
+CHECKBOX allday=FORMONLY.allday,TITLE="All-day";
+DATETIMEEDIT startDate=FORMONLY.startDate,TITLE="Starts",NOT NULL;
+DATETIMEEDIT endDate=FORMONLY.endDate,TITLE="Ends",NOT NULL;
+COMBOBOX freq=FORMONLY.freq,TITLE="Repeat",ITEMS=((NULL,"Never"),
                                  ("daily","Every Day"),
                                  ("weekly","Every Week"),
                                  ("monthly","Every Month"),
                                  ("yearly","Every Year"));
-END
-GROUP --(TEXT="Alerts")
-COMBOBOX FORMONLY.firstReminderMinutes,TITLE="Alert",ITEMS=((NULL,"None"),
+
+COMBOBOX first=FORMONLY.firstReminderMinutes,TITLE="Alert",ITEMS=((NULL,"None"),
                                              (15,"15 min before"),
                                              (60,"1 hour before"),
                                              (1440,"1 day before"),
                                              (10080,"1 week before"),
                                              (46080,"1 month before"));
-COMBOBOX FORMONLY.secondReminderMinutes,TITLE="Second Alert",ITEMS=((NULL,"None"),
+COMBOBOX second=FORMONLY.secondReminderMinutes,TITLE="Second Alert",ITEMS=((NULL,"None"),
                                              (15,"15 min before"),
                                              (60,"1 hour before"),
                                              (1440,"1 day before"),
                                              (10080,"1 week before"),
                                              (46080,"1 month before"));
-END
 
-GROUP
-EDIT FORMONLY.url,COMMENT="<Url>",JUSTIFY=LEFT;
-TEXTEDIT FORMONLY.notes,COMMENT="<Notes>";
-END
-
-END
+EDIT url=FORMONLY.url,COMMENT="<Url>",JUSTIFY=LEFT;
+TEXTEDIT notes=FORMONLY.notes,COMMENT="<Notes>";
